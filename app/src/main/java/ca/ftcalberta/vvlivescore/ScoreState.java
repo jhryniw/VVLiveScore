@@ -30,11 +30,11 @@ enum OpMode {
 
 public class ScoreState {
 
-    public int score = 0;
-    public Alliance alliance = BLUE;
-    public ScoreType type = CORNER_VORTEX;
-    public OpMode opMode = AUTONOMOUS;
-    public int incrementAmount = 1;
+    private int score = 0;
+    private Alliance alliance = BLUE;
+    private ScoreType type = CORNER_VORTEX;
+    private OpMode opMode = AUTONOMOUS;
+    private int incrementAmount = 1;
 
     public ScoreState(int s, Alliance a, ScoreType t, OpMode o){
         score = s;
@@ -57,6 +57,20 @@ public class ScoreState {
     public void setOpMode(OpMode o){
         opMode = o;
         setIncrement();
+    }
+
+    public void setScoreType(ScoreType s){
+        type = s;
+        setIncrement();
+    }
+
+    public void setAlliance(Alliance a){
+        alliance = a;
+        setIncrement();
+    }
+
+    public int getScore(){
+        return score;
     }
 
     public void setIncrement(){
