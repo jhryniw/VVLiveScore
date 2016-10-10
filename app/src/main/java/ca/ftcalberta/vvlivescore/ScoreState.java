@@ -72,7 +72,11 @@ public class ScoreState {
     }
 
     public int increase(){
-        score += incrementAmount;
+        if(score - incrementAmount < 0){
+            score = 0;
+        } else {
+            score += incrementAmount;
+        }
         return score ;
     }
 
