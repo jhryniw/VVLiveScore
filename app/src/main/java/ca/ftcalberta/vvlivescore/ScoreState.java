@@ -50,6 +50,10 @@ public class ScoreState {
         setIncrement();
     }
 
+    public ScoreState(){
+        setIncrement();
+    }
+
     public void setOpMode(OpMode o){
         opMode = o;
         setIncrement();
