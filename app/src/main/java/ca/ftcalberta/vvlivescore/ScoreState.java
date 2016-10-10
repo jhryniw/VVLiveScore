@@ -64,6 +64,9 @@ public class ScoreState {
         setIncrement();
     }
 
+    public Alliance getAlliance() {
+        return alliance;
+    }
     public void setAlliance(Alliance a){
         alliance = a;
         setIncrement();
