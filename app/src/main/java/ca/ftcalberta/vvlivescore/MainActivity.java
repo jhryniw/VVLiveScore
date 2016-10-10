@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
                 Alliance currentAlliance = scoreState.getAlliance();
 
                 if(currentAlliance == Alliance.BLUE) {
-                    scoreState.setAlliance(Alliance.BLUE);
+                    scoreState.setAlliance(Alliance.RED);
                     btnAlliance.setBackgroundResource(R.drawable.alliance_button_red);
                     btnAlliance.setText("Red Alliance");
                 }
@@ -43,6 +43,24 @@ public class MainActivity extends Activity {
                     scoreState.setAlliance(Alliance.BLUE);
                     btnAlliance.setBackgroundResource(R.drawable.alliance_button_blue);
                     btnAlliance.setText("Blue Alliance");
+                }
+            }
+        });
+
+        final Button btnOpMode = (Button) findViewById(R.id.btnOpMode);
+        btnOpMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpMode opMode = scoreState.getOpMode();
+
+                //Swap OpMode
+                if(opMode == OpMode.AUTONOMOUS) {
+                    scoreState.setOpMode(OpMode.TELEOP);
+                    btnOpMode.setText("Teleop");
+                }
+                else {
+                    scoreState.setOpMode(OpMode.AUTONOMOUS);
+                    btnOpMode.setText("Autonomous");
                 }
             }
         });

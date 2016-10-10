@@ -54,6 +54,9 @@ public class ScoreState {
         setIncrement();
     }
 
+    public OpMode getOpMode() {
+        return opMode;
+    }
     public void setOpMode(OpMode o){
         opMode = o;
         setIncrement();
