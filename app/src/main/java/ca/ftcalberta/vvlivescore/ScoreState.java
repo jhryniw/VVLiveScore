@@ -71,4 +71,9 @@ public class ScoreState {
         score += incrementAmount;
         return score ;
     }
+
+    public int decrease(){
+        score -= incrementAmount;
+        return score ;
+    }
 }
