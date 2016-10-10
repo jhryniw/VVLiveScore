@@ -5,4 +5,7 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!--TODO: Use color picker to get actual colors-->
+    <color name="FtcRed">#FF0000</color>
+    <color name="FtcBlue">#0000FF</color>
 </resources>
