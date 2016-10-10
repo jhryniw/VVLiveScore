@@ -80,25 +80,25 @@ public class ScoreState {
         if(type == CORNER_VORTEX && opMode == AUTONOMOUS){
             incrementAmount = 5;
         } else if (type == CORNER_VORTEX && opMode == TELEOP){
-            incrementAmount = 5;
+            incrementAmount = 1;
         } else if (type == CENTRE_VORTEX && opMode == AUTONOMOUS){
-            incrementAmount = 5;
+            incrementAmount = 15;
         } else if (type == CENTRE_VORTEX && opMode == TELEOP){
             incrementAmount = 5;
         }
     }
 
     public int increase(){
-        if(score - incrementAmount < 0){
-            score = 0;
-        } else {
-            score += incrementAmount;
-        }
+        score += incrementAmount;
         return score ;
     }
 
     public int decrease(){
-        score -= incrementAmount;
+        if(score - incrementAmount < 0){
+            score = 0;
+        } else {
+            score -= incrementAmount;
+        }
         return score ;
     }
 }
