@@ -1,9 +1,5 @@
 package ca.ftcalberta.vvlivescore;
 
-import android.graphics.Path;
-
-import java.lang.reflect.Type;
-
 import static ca.ftcalberta.vvlivescore.Alliance.BLUE;
 import static ca.ftcalberta.vvlivescore.OpMode.AUTONOMOUS;
 import static ca.ftcalberta.vvlivescore.OpMode.TELEOP;

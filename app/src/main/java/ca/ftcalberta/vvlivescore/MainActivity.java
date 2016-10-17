@@ -14,10 +14,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 public class MainActivity extends Activity {
 
-    private List<ScoreUpdate> updates = new ArrayList<ScoreUpdate>();
+    //todo: log the updates
+    //private List<ScoreUpdate> updates = new ArrayList<ScoreUpdate>();
+    private ScoreUpdate scoreUpdate;
     private ScoreState scoreState = new ScoreState();
     private TextView txtTotal;
 
@@ -57,6 +60,7 @@ public class MainActivity extends Activity {
                 if(opMode == OpMode.AUTONOMOUS) {
                     scoreState.setOpMode(OpMode.TELEOP);
                     btnOpMode.setText("Teleop");
+                    scoreUpdate.launch();
                 }
                 else {
                     scoreState.setOpMode(OpMode.AUTONOMOUS);
@@ -108,6 +112,9 @@ public class MainActivity extends Activity {
         });
 
         txtTotal = (TextView) findViewById(R.id.txtTotal);
+
+        scoreUpdate = new ScoreUpdate(UUID.randomUUID(), ScoreType.CENTRE_VORTEX, scoreState.getAlliance(), scoreState.getOpMode(), 0);
+        //scoreUpdate.launch();
     }
 
     private void updateTotal() {
