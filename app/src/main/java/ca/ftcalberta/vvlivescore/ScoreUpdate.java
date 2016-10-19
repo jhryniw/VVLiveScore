@@ -2,6 +2,7 @@ package ca.ftcalberta.vvlivescore;
 
 import android.os.Handler;
 import android.util.Base64;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
 import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.StatusLine;
 import cz.msebera.android.httpclient.client.ClientProtocolException;
 import cz.msebera.android.httpclient.client.methods.HttpPost;
 import cz.msebera.android.httpclient.entity.StringEntity;
@@ -99,17 +101,20 @@ public class ScoreUpdate {
             String encodedAuth = "Basic " + Base64.encodeToString(authorization.getBytes(), Base64.DEFAULT);
             HttpPost httpPost = new HttpPost("http://livescoring.ftcalberta.ca/");
             CloseableHttpClient client = HttpClientBuilder.create().build();
-            StringEntity stringEntity = new StringEntity("d=" + json);
+            StringEntity stringEntity = new StringEntity("d=" + "");
 
-            httpPost.addHeader("content-type", "application/x-www-form-urlencoded");
-            httpPost.addHeader("Authorization", encodedAuth);
+            //httpPost.addHeader("content-type", "application/x-www-form-urlencoded");
+            httpPost.addHeader("content-type", "application/json");
+            //httpPost.addHeader("Authorization", encodedAuth);
             httpPost.setEntity(stringEntity);
+            //Log.d("Post: ", json);
 
             HttpResponse response = client.execute(httpPost); // execute the post
-
-            /*InputStream inputStream = response.getEntity().getContent();
+            StatusLine statusLine = response.getStatusLine();
+            Log.d("Status Line: ", statusLine.toString());
+            InputStream inputStream = response.getEntity().getContent();
             String responseStr = convertStreamtoString(inputStream);
-            jsonObject = new JSONObject(responseStr);//.fromObject(jsonResponse);*/
+            jsonObject = new JSONObject(responseStr);//.fromObject(jsonResponse);
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -117,9 +122,9 @@ public class ScoreUpdate {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } /*catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
-        }*/
+        }
         return jsonObject;
     }
 
