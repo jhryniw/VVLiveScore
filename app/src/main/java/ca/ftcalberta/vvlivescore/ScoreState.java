@@ -1,5 +1,10 @@
 package ca.ftcalberta.vvlivescore;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.UUID;
+
 import static ca.ftcalberta.vvlivescore.Alliance.BLUE;
 import static ca.ftcalberta.vvlivescore.OpMode.AUTONOMOUS;
 import static ca.ftcalberta.vvlivescore.OpMode.TELEOP;
@@ -26,29 +31,40 @@ enum OpMode {
 
 public class ScoreState {
 
-    private int score = 0;
-    private Alliance alliance = BLUE;
-    private ScoreType type = CORNER_VORTEX;
-    private OpMode opMode = AUTONOMOUS;
-    private int incrementAmount = 1;
+    private UUID phoneId;
 
-    public ScoreState(int s, Alliance a, ScoreType t, OpMode o){
+    private ScoreUpdater updater;
+
+    private int score = 0;
+    private Alliance alliance;
+    private ScoreType type;
+    private OpMode opMode;
+    private int incrementAmount;
+
+    /*
+     *  Constructors
+     */
+
+    public ScoreState() {
+        this(0, Alliance.BLUE, ScoreType.CENTRE_VORTEX, OpMode.AUTONOMOUS);
+    }
+
+    public ScoreState(int s, Alliance a, ScoreType t, OpMode o) {
         score = s;
         alliance = a;
         type = t;
         opMode = o;
         setIncrement();
+
+        phoneId = UUID.randomUUID();
+
+        updater = new ScoreUpdater();
+        updater.launch();
     }
 
-    public ScoreState(Alliance a, ScoreType t){
-        alliance = a;
-        type = t;
-        setIncrement();
-    }
-
-    public ScoreState(){
-        setIncrement();
-    }
+    /*
+     *  Property Methods
+     */
 
     public OpMode getOpMode() {
         return opMode;
@@ -56,11 +72,16 @@ public class ScoreState {
     public void setOpMode(OpMode o){
         opMode = o;
         setIncrement();
+        updateState();
     }
 
+    public ScoreType getScoreType() {
+        return type;
+    }
     public void setScoreType(ScoreType s){
         type = s;
         setIncrement();
+        updateState();
     }
 
     public Alliance getAlliance() {
@@ -69,6 +90,7 @@ public class ScoreState {
     public void setAlliance(Alliance a){
         alliance = a;
         setIncrement();
+        updateState();
     }
 
     public int getScore(){
@@ -87,9 +109,15 @@ public class ScoreState {
         }
     }
 
+    /*
+     *  Scoring Methods
+     */
+
     public int increase(){
         score += incrementAmount;
-        return score ;
+
+        updateState();
+        return score;
     }
 
     public int decrease(){
@@ -98,6 +126,36 @@ public class ScoreState {
         } else {
             score -= incrementAmount;
         }
-        return score ;
+
+        updateState();
+        return score;
+    }
+
+    /*
+     *  Update Methods
+     */
+
+    private void updateState() {
+        updater.state = serializeState();
+    }
+
+    private JSONObject serializeState() {
+        JSONObject updateJson = new JSONObject();
+
+        try {
+            updateJson.put("phoneId", phoneId.toString());
+            updateJson.put("scoreId", UUID.randomUUID().toString());
+            updateJson.put("timeStamp", System.currentTimeMillis());
+
+            updateJson.put("Alliance", alliance);
+            updateJson.put("Vortex", type);
+            updateJson.put("Mode", opMode);
+            updateJson.put("TotalScore", score);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return updateJson;
     }
 }

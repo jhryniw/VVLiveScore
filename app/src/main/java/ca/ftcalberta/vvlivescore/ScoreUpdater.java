@@ -23,20 +23,13 @@ import cz.msebera.android.httpclient.impl.client.CloseableHttpClient;
 import cz.msebera.android.httpclient.impl.client.HttpClientBuilder;
 
 /**
- * ScoreUpdate Created by s on 10/10/2016.
+ * ScoreUpdater Created by s on 10/10/2016.
  */
 
-public class ScoreUpdate {
+public class ScoreUpdater {
 
-    private UUID phoneId;
-    private UUID scoreId;
-    private ScoreType type;
-    private Alliance alliance;
-    private OpMode opMode;
-    private Long timeStamp;
-    private int score;
+    public JSONObject state;
 
-    private boolean isActive = false;
     private boolean isPosting = false;
     private Handler mHandle = new Handler();
 
@@ -44,41 +37,22 @@ public class ScoreUpdate {
         @Override
         public void run() {
             try {
-                String strJson = getUpdateJSON().toString();
-                JSONObject resp = getHttpConn(strJson);
+                JSONObject resp = getHttpConn(state.toString());
 
                 //TODO: Check for resp code 200
 
                 if(isPosting)
                     mHandle.postDelayed(post, 1000);
             }
-            catch (JSONException e) {
+            catch (Exception e) {
                 e.printStackTrace();
                 isPosting = false;
             }
         }
     };
 
-    public ScoreUpdate(UUID pId, ScoreType t, Alliance a, OpMode o, int s){
-        phoneId = pId;
-        scoreId = UUID.randomUUID();
-        type = t;
-        alliance = a;
-        opMode = o;
-        timeStamp = System.currentTimeMillis();
-        score = s;
-    }
-
-    public JSONObject getUpdateJSON() throws JSONException {
-        JSONObject update = new JSONObject();
-        update.put("Alliance",alliance);
-        update.put("Vortex",type);
-        update.put("Mode",opMode);
-        update.put("TotalScore",score);
-        //update.put("phoneId", phoneId.toString());
-        //update.put("scoreId", scoreId.toString());
-        //update.put("timeStamp",timeStamp);
-        return update;
+    public ScoreUpdater() {
+        state = new JSONObject();
     }
 
     public void launch() {
@@ -86,7 +60,7 @@ public class ScoreUpdate {
             return;
 
         isPosting = true;
-        post.run();
+        mHandle.postDelayed(post, 1000);
     }
 
     public void halt() {
@@ -94,7 +68,7 @@ public class ScoreUpdate {
     }
 
     public JSONObject getHttpConn(String json){
-        JSONObject jsonObject=null;
+        JSONObject jsonObject = null;
 
         try {
             String authorization = "ftcscoring:OMGr0b0t";

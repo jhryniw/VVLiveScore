@@ -20,11 +20,10 @@ import java.util.UUID;
 public class MainActivity extends Activity {
 
     //todo: log the updates
-    //private List<ScoreUpdate> updates = new ArrayList<ScoreUpdate>();
-    private ScoreUpdate scoreUpdate;
+    //private List<ScoreUpdater> updates = new ArrayList<ScoreUpdater>();
+
     private ScoreState scoreState = new ScoreState();
     private TextView txtTotal;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,6 @@ public class MainActivity extends Activity {
                 if(opMode == OpMode.AUTONOMOUS) {
                     scoreState.setOpMode(OpMode.TELEOP);
                     btnOpMode.setText("Teleop");
-                    scoreUpdate.launch();
                 }
                 else {
                     scoreState.setOpMode(OpMode.AUTONOMOUS);
@@ -117,9 +115,6 @@ public class MainActivity extends Activity {
         });
 
         txtTotal = (TextView) findViewById(R.id.txtTotal);
-
-        scoreUpdate = new ScoreUpdate(UUID.randomUUID(), ScoreType.CENTRE_VORTEX, scoreState.getAlliance(), scoreState.getOpMode(), 0);
-        //scoreUpdate.launch();
     }
 
     private void updateTotal() {
