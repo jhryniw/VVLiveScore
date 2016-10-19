@@ -101,7 +101,7 @@ public class ScoreUpdate {
             String encodedAuth = "Basic " + Base64.encodeToString(authorization.getBytes(), Base64.DEFAULT);
             HttpPost httpPost = new HttpPost("http://livescoring.ftcalberta.ca/");
             CloseableHttpClient client = HttpClientBuilder.create().build();
-            StringEntity stringEntity = new StringEntity("d=" + "");
+            StringEntity stringEntity = new StringEntity(json);
 
             //httpPost.addHeader("content-type", "application/x-www-form-urlencoded");
             httpPost.addHeader("content-type", "application/json");
