@@ -174,14 +174,15 @@ public class ScoreState {
         JSONObject updateJson = new JSONObject();
 
         try {
-            updateJson.put("phoneId", phoneId.toString());
-            updateJson.put("scoreId", UUID.randomUUID().toString());
-            updateJson.put("timeStamp", System.currentTimeMillis());
+            updateJson.put("\"" + type.toString() +"\"",score);
+            //updateJson.put("phoneId", phoneId.toString());
+            //updateJson.put("scoreId", UUID.randomUUID().toString());
+            //updateJson.put("timeStamp", System.currentTimeMillis());
 
-            updateJson.put("Alliance", alliance);
-            updateJson.put("Vortex", type);
-            updateJson.put("Mode", opMode);
-            updateJson.put("TotalScore", score);
+            //updateJson.put("Alliance", alliance);
+            //updateJson.put("Vortex", type);
+            //updateJson.put("Mode", opMode);
+            //updateJson.put("TotalScore", score);
         }
         catch (JSONException e) {
             e.printStackTrace();
