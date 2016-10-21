@@ -80,10 +80,10 @@ public class MainActivity extends Activity {
 
                 switch (selected) {
                     case "Corner Vortex":
-                        scoreState.setScoreType(ScoreType.CORNER_VORTEX);
+                        scoreState.setVortexType(VortexType.CORNER_VORTEX);
                         break;
                     case "Centre Vortex":
-                        scoreState.setScoreType(ScoreType.CENTRE_VORTEX);
+                        scoreState.setVortexType(VortexType.CENTRE_VORTEX);
                         break;
                     default:
                         Log.d("ScoreType", "Score type selected is not valid!");

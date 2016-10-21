@@ -5,23 +5,43 @@ import org.json.JSONObject;
 
 import java.util.UUID;
 
-import static ca.ftcalberta.vvlivescore.Alliance.BLUE;
-import static ca.ftcalberta.vvlivescore.OpMode.AUTONOMOUS;
-import static ca.ftcalberta.vvlivescore.OpMode.TELEOP;
-import static ca.ftcalberta.vvlivescore.ScoreType.CENTRE_VORTEX;
-import static ca.ftcalberta.vvlivescore.ScoreType.CORNER_VORTEX;
+import static ca.ftcalberta.vvlivescore.Alliance.*;
+import static ca.ftcalberta.vvlivescore.OpMode.*;
+import static ca.ftcalberta.vvlivescore.ScoreType.*;
+import static ca.ftcalberta.vvlivescore.VortexType.*;
 
 /**
  * Created by s on 10/10/2016.
  */
+
 enum Alliance{
     RED,
     BLUE
 }
 
 enum ScoreType {
+    RedAutoCentre,
+    BlueAutoCentre,
+    RedAutoCorner,
+    BlueAutoCorner,
+    RedParking,
+    BlueParking,
+    RedAutoBeacons,
+    BlueAutoBeacons,
+    RedTeleCentre,
+    BlueTeleCentre,
+    RedTeleCorner,
+    BlueTeleCorner,
+    RedTeleBeacons,
+    BlueTeleBeacons,
+    RedCapBall,
+    BlueCapBall
+}
+
+enum VortexType {
     CORNER_VORTEX,
-    CENTRE_VORTEX
+    CENTRE_VORTEX,
+    NONE
 }
 
 enum OpMode {
@@ -36,7 +56,9 @@ public class ScoreState {
     private ScoreUpdater updater;
 
     private int score = 0;
+
     private Alliance alliance;
+    private VortexType vortexType;
     private ScoreType type;
     private OpMode opMode;
     private int incrementAmount;
@@ -46,14 +68,14 @@ public class ScoreState {
      */
 
     public ScoreState() {
-        this(0, Alliance.BLUE, ScoreType.CENTRE_VORTEX, OpMode.AUTONOMOUS);
+        this(0, Alliance.BLUE, CORNER_VORTEX, OpMode.AUTONOMOUS);
     }
 
-    public ScoreState(int s, Alliance a, ScoreType t, OpMode o) {
+    public ScoreState(int s, Alliance a, VortexType v, OpMode o) {
         score = s;
         alliance = a;
-        type = t;
         opMode = o;
+        vortexType = v;
         setIncrement();
 
         phoneId = UUID.randomUUID();
@@ -75,9 +97,11 @@ public class ScoreState {
         updateState();
     }
 
-    public ScoreType getScoreType() {
-        return type;
+    public void setVortexType(VortexType v){
+        vortexType = v;
+        setIncrement();
     }
+
     public void setScoreType(ScoreType s){
         type = s;
         setIncrement();
@@ -98,14 +122,21 @@ public class ScoreState {
     }
 
     public void setIncrement(){
-        if(type == CORNER_VORTEX && opMode == AUTONOMOUS){
+        if(vortexType == CORNER_VORTEX && opMode == AUTONOMOUS){
+            type = RedAutoCorner;
             incrementAmount = 5;
-        } else if (type == CORNER_VORTEX && opMode == TELEOP){
+        } else if (vortexType == CORNER_VORTEX && opMode == TELEOP){
+            type = RedTeleCorner;
             incrementAmount = 1;
-        } else if (type == CENTRE_VORTEX && opMode == AUTONOMOUS){
+        } else if (vortexType == CENTRE_VORTEX && opMode == AUTONOMOUS){
+            type = RedAutoCentre;
             incrementAmount = 15;
-        } else if (type == CENTRE_VORTEX && opMode == TELEOP){
+        } else if (vortexType == CENTRE_VORTEX && opMode == TELEOP){
+            type = RedTeleCentre;
             incrementAmount = 5;
+        }
+        if(alliance == BLUE){
+            type = ScoreType.values()[type.ordinal() + 1];
         }
     }
 
