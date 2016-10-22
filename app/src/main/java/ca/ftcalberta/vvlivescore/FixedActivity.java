@@ -1,14 +1,18 @@
 package ca.ftcalberta.vvlivescore;
 
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import static ca.ftcalberta.vvlivescore.R.drawable.alliance_button_blue;
 
-public class FixedActivity extends AppCompatActivity {
+public class FixedActivity extends Activity {
 
     private int beaconValue = 30;
     OpMode opMode = OpMode.AUTONOMOUS;
@@ -22,6 +26,7 @@ public class FixedActivity extends AppCompatActivity {
     private Alliance beacon2Alliance = Alliance.NONE;
     private Alliance beacon3Alliance = Alliance.NONE;
     private Alliance beacon4Alliance = Alliance.NONE;
+    private ScoreUpdater updater;
 
 
     @Override
@@ -80,9 +85,18 @@ public class FixedActivity extends AppCompatActivity {
 
         String strOpMode = "Auto";
         String strScoreType;
+        JSONObject updateJson = new JSONObject();
 
         if(opMode == OpMode.TELEOP){
             strOpMode = "Tele";
+        }
+        strScoreType = alliance.toString() + strOpMode + type;
+
+        try {
+            updateJson.put("\"" + strScoreType +"\"", score);
+         }
+        catch (JSONException e) {
+            e.printStackTrace();
         }
 
 

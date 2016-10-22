@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_fixed"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="ca.ftcalberta.vvlivescore.FixedActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
+
+            <Button
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/btnRedParkingCapScore"
+                android:textColor="@android:color/white"
+                android:background="@drawable/alliance_button_red" />
+
+            <TextView
+                android:text="Parking"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:id="@+id/txtParkingCapTitle"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
+            <Button
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/btnBlueParkingCapScore"
+                android:textColor="@android:color/white"
+                android:background="@drawable/alliance_button_blue" />
+
+        </LinearLayout>
+
+        <Button
+            android:text="Autonomous"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/btnOpMode"
+            android:textStyle="bold"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:text="Beacon 1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/btnBeacon1"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/score_button"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold"
+                android:textSize="24sp" />
+
+            <Button
+                android:text="Beacon 2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/btnBeacon2"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/score_button"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold"
+                android:textSize="24sp" />
+
+            <Button
+                android:text="Beacon 3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/btnBeacon3"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/score_button"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold"
+                android:textSize="24sp" />
+
+            <Button
+                android:text="Beacon 4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/btnBeacon4"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/score_button"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
