@@ -16,7 +16,8 @@ import static ca.ftcalberta.vvlivescore.VortexType.*;
 
 enum Alliance{
     RED,
-    BLUE
+    BLUE,
+    NONE
 }
 
 enum ScoreType {

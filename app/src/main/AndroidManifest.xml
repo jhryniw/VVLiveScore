@@ -17,7 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".VortexActivity"></activity>
+        <activity android:name=".VortexActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".FixedActivity"></activity>
     </application>
 
 </manifest>
