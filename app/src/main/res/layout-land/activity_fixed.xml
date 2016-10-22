@@ -29,41 +29,85 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_marginRight="10dp"
                 android:id="@+id/btnRedParkingScore"
                 android:textColor="@android:color/white"
                 android:background="@drawable/alliance_button_red" />
-
-            <TextView
-                android:text="Parking"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:id="@+id/txtParkingCapTitle"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:gravity="center" />
 
             <Button
                 android:text="0"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/btnRed2ParkingScore"
+                android:textColor="@android:color/white"
+                android:background="@drawable/alliance_button_red" />
+
+            <Button
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:id="@+id/btnBlueParkingScore"
+                android:textColor="@android:color/white"
+                android:background="@drawable/alliance_button_blue" />
+
+            <Button
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/btnBlue2ParkingScore"
                 android:textColor="@android:color/white"
                 android:background="@drawable/alliance_button_blue" />
 
         </LinearLayout>
 
-        <Button
-            android:text="Autonomous"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:id="@+id/btnOpMode"
-            android:textStyle="bold"
-            android:textSize="24sp" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
+
+            <Button
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:id="@+id/btnRedCapScore"
+                android:textColor="@android:color/white"
+                android:background="@drawable/alliance_button_red" />
+
+            <Button
+                android:text="Autonomous"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/btnOpMode"
+                android:textStyle="bold"
+                android:textSize="24sp" />
+
+            <Button
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/btnBlueCapScore"
+                android:textColor="@android:color/white"
+                android:background="@drawable/alliance_button_blue" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
