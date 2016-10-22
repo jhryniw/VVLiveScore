@@ -1,8 +1,10 @@
 package ca.ftcalberta.vvlivescore;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,12 +26,20 @@ public class MainActivity extends Activity {
 
     private ScoreState scoreState = new ScoreState();
     private TextView txtTotal;
+    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+    SharedPreferences.Editor editor = sharedPref.edit();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        //put your value
+        editor.putString("userName", "stackoverlow");
+
+        //commits your edits
+        editor.commit();
 
         setContentView(R.layout.activity_main);
 
