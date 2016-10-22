@@ -55,10 +55,23 @@ public class VortexActivity extends Activity {
         });
 
         txtTotal = (TextView) findViewById(R.id.txtTotal);
+
+        scoreState.launch();
     }
 
     private void updateTotal() {
         txtTotal.setText(String.format(Locale.CANADA, "Total: %d", scoreState.getScore()));
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        scoreState.halt();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        scoreState.launch();
     }
 }

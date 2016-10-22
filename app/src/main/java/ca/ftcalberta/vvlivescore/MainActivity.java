@@ -26,10 +26,9 @@ public class MainActivity extends Activity {
 
     //TODO: Log Updates
 
-    private ScoreState scoreState = new ScoreState();
-
     private String scoreTypeState = "Vortex";
     private String vortexState = "Centre";
+    private Alliance allianceState = Alliance.BLUE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,15 +87,13 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
 
                 //Swap alliance
-                Alliance currentAlliance = scoreState.getAlliance();
-
-                if(currentAlliance == Alliance.BLUE) {
-                    scoreState.setAlliance(Alliance.RED);
+                if(allianceState == Alliance.BLUE) {
+                    allianceState = Alliance.RED;
                     btnAlliance.setBackgroundResource(R.drawable.alliance_button_red);
                     btnAlliance.setText("Red");
                 }
                 else {
-                    scoreState.setAlliance(Alliance.BLUE);
+                    allianceState = Alliance.BLUE;
                     btnAlliance.setBackgroundResource(R.drawable.alliance_button_blue);
                     btnAlliance.setText("Blue");
                 }
@@ -109,20 +106,30 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("scoreType", scoreState.getScoreType().ordinal());
-                editor.putInt("vortex", scoreState.getVortexType().ordinal());
-                editor.putInt("alliance", scoreState.getAlliance().ordinal());
+                if(scoreTypeState.equals("Vortex")) {
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("scoreType", scoreTypeState);
+                    editor.putString("vortex", vortexState);
+                    editor.putInt("alliance", allianceState.ordinal());
 
-                editor.apply();
+                    editor.apply();
 
-                goToVortexActivity();
+                    goToVortexActivity();
+                }
+                else {
+                    goToFixedActivity();
+                }
             }
         });
     }
 
     public void goToVortexActivity() {
         Intent intent = new Intent(this, VortexActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToFixedActivity() {
+        Intent intent = new Intent(this, FixedActivity.class);
         startActivity(intent);
     }
 }

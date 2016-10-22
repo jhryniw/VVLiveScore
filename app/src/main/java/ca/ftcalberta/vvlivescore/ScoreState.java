@@ -82,7 +82,7 @@ public class ScoreState {
         phoneId = UUID.randomUUID();
 
         updater = new ScoreUpdater();
-        updater.launch();
+        updateState();
     }
 
     /*
@@ -172,6 +172,14 @@ public class ScoreState {
     /*
      *  Update Methods
      */
+
+    public void launch() {
+        updater.launch();
+    }
+
+    public void halt() {
+        updater.halt();
+    }
 
     private void updateState() {
         updater.state = serializeState();

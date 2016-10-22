@@ -3,6 +3,9 @@ package ca.ftcalberta.vvlivescore;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -23,7 +26,7 @@ public class FixedActivity extends Activity {
     private Alliance beacon2Alliance = Alliance.NONE;
     private Alliance beacon3Alliance = Alliance.NONE;
     private Alliance beacon4Alliance = Alliance.NONE;
-    private ScoreUpdater updater;
+    private ScoreUpdater updater = new ScoreUpdater();
 
 
     @Override
@@ -173,7 +176,7 @@ public class FixedActivity extends Activity {
 
     }
 
-    private void sendScore( Alliance alliance, OpMode opMode, String type, int score){
+    private void sendScore( Alliance alliance, OpMode opMode, String type, int score) {
 
         String strOpMode = "Auto";
         String strScoreType;
@@ -192,7 +195,6 @@ public class FixedActivity extends Activity {
         }
 
         updater.getHttpConn(updateJson.toString());
-
     }
 
 
