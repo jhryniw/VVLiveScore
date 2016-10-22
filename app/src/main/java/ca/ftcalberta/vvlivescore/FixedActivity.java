@@ -2,15 +2,12 @@ package ca.ftcalberta.vvlivescore;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import static ca.ftcalberta.vvlivescore.R.drawable.alliance_button_blue;
 
 public class FixedActivity extends Activity {
 
@@ -42,7 +39,8 @@ public class FixedActivity extends Activity {
                  if(opMode == OpMode.AUTONOMOUS) {
                      opMode = OpMode.TELEOP;
                      beaconValue = 10;
-
+                     sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
+                     sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
                      btnOpMode.setText("TeleOp");
                  }
                  else {
@@ -70,14 +68,108 @@ public class FixedActivity extends Activity {
                     blueBeaconCount--;
                     redBeaconCount++;
                 }
-
                 sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
                 sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
             }
         });
 
+        final Button btnBeacon2 = (Button) findViewById(R.id.btnBeacon1);
+        btnBeacon2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Drawable colour = btnBeacon1.getBackground();
 
+                if(beacon2Alliance == Alliance.NONE){
+                    redBeaconCount++;
+                } else if(beacon2Alliance == Alliance.RED){
+                    redBeaconCount--;
+                    blueBeaconCount++;
+                } else if(beacon2Alliance == Alliance.BLUE){
+                    blueBeaconCount--;
+                    redBeaconCount++;
+                }
+                sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
+                sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
+            }
+        });
 
+        final Button btnBeacon3 = (Button) findViewById(R.id.btnBeacon1);
+        btnBeacon3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Drawable colour = btnBeacon1.getBackground();
+
+                if(beacon3Alliance == Alliance.NONE){
+                    redBeaconCount++;
+                } else if(beacon3Alliance == Alliance.RED){
+                    redBeaconCount--;
+                    blueBeaconCount++;
+                } else if(beacon3Alliance == Alliance.BLUE){
+                    blueBeaconCount--;
+                    redBeaconCount++;
+                }
+                sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
+                sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
+            }
+        });
+
+        final Button btnBeacon4 = (Button) findViewById(R.id.btnBeacon1);
+        btnBeacon4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Drawable colour = btnBeacon1.getBackground();
+
+                if(beacon4Alliance == Alliance.NONE){
+                    redBeaconCount++;
+                } else if(beacon4Alliance == Alliance.RED){
+                    redBeaconCount--;
+                    blueBeaconCount++;
+                } else if(beacon4Alliance == Alliance.BLUE){
+                    blueBeaconCount--;
+                    redBeaconCount++;
+                }
+                sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
+                sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
+            }
+        });
+
+        final Button btnRedParkingScore = (Button) findViewById(R.id.btnRedParkingScore);
+        btnRedParkingScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(opMode == OpMode.TELEOP){
+                    return;
+                }
+                if(redParkingScore == 0){
+                    redParkingScore = 5;
+                } else if(redParkingScore == 5) {
+                    redParkingScore = 10;
+                } else {
+                    redParkingScore = 0;
+                }
+                sendScore(Alliance.RED, opMode, "Beacons", redParkingScore);
+                btnRedParkingScore.setText(Integer.toString(redParkingScore));
+            }
+        });
+
+        final Button btnBlueParkingScore = (Button) findViewById(R.id.btnBlueParkingScore);
+        btnBlueParkingScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(opMode == OpMode.TELEOP){
+                    return;
+                }
+                if(blueParkingScore == 0){
+                    blueParkingScore = 5;
+                } else if(blueParkingScore == 5) {
+                    blueParkingScore = 10;
+                } else {
+                    blueParkingScore = 0;
+                }
+                sendScore(Alliance.BLUE, opMode, "Beacons", blueParkingScore);
+                btnBlueParkingScore.setText(Integer.toString(blueParkingScore));
+            }
+        });
 
     }
 
@@ -99,6 +191,7 @@ public class FixedActivity extends Activity {
             e.printStackTrace();
         }
 
+        updater.getHttpConn(updateJson.toString());
 
     }
 
