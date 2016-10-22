@@ -98,11 +98,17 @@ public class ScoreState {
         updateState();
     }
 
+    public VortexType getVortexType() {
+        return vortexType;
+    }
     public void setVortexType(VortexType v){
         vortexType = v;
         setIncrement();
     }
 
+    public ScoreType getScoreType() {
+        return type;
+    }
     public void setScoreType(ScoreType s){
         type = s;
         setIncrement();

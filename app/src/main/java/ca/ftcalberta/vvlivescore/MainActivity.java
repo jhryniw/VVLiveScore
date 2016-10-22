@@ -1,7 +1,9 @@
 package ca.ftcalberta.vvlivescore;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,13 +24,12 @@ import java.util.UUID;
 
 public class MainActivity extends Activity {
 
-    //todo: log the updates
-    //private List<ScoreUpdater> updates = new ArrayList<ScoreUpdater>();
+    //TODO: Log Updates
 
     private ScoreState scoreState = new ScoreState();
-    private TextView txtTotal;
-    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-    SharedPreferences.Editor editor = sharedPref.edit();
+
+    private String scoreTypeState = "Vortex";
+    private String vortexState = "Centre";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +37,50 @@ public class MainActivity extends Activity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        //put your value
-        editor.putString("userName", "stackoverlow");
-
-        //commits your edits
-        editor.commit();
-
         setContentView(R.layout.activity_main);
+
+        Button btnScoreType = (Button) findViewById(R.id.btnScoringType);
+        btnScoreType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button btn = (Button) v;
+                LinearLayout vortexBlock = (LinearLayout) findViewById(R.id.layout_selectVortex);
+
+                //Swap scoring type
+                if(scoreTypeState.equals("Vortex")) {
+                    scoreTypeState = "Fixed";
+                    btn.setText("Fixed");
+                    btn.setTextColor(Color.WHITE);
+                    btn.setBackgroundResource(R.drawable.decrement_button);
+                    vortexBlock.setVisibility(LinearLayout.GONE);
+                }
+                else { // == "Fixed"
+                    scoreTypeState = "Vortex";
+                    btn.setText("Vortex");
+                    btn.setTextColor(Color.BLACK);
+                    btn.setBackgroundResource(R.drawable.score_button);
+                    vortexBlock.setVisibility(LinearLayout.VISIBLE);
+                }
+            }
+        });
+
+        Button btnVortex = (Button) findViewById(R.id.btnVortex);
+        btnVortex.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button btn = (Button) v;
+
+                //Swap vortex mode
+                if(vortexState.equals("Centre")) {
+                    vortexState = "Corner";
+                    btn.setText("Corner");
+                }
+                else { // == "Fixed"
+                    vortexState = "Centre";
+                    btn.setText("Centre");
+                }
+            }
+        });
 
         final Button btnAlliance = (Button) findViewById(R.id.btnAlliance);
         btnAlliance.setOnClickListener(new View.OnClickListener() {
@@ -54,80 +93,36 @@ public class MainActivity extends Activity {
                 if(currentAlliance == Alliance.BLUE) {
                     scoreState.setAlliance(Alliance.RED);
                     btnAlliance.setBackgroundResource(R.drawable.alliance_button_red);
-                    btnAlliance.setText("Red Alliance");
+                    btnAlliance.setText("Red");
                 }
                 else {
                     scoreState.setAlliance(Alliance.BLUE);
                     btnAlliance.setBackgroundResource(R.drawable.alliance_button_blue);
-                    btnAlliance.setText("Blue Alliance");
+                    btnAlliance.setText("Blue");
                 }
             }
         });
 
-        final Button btnOpMode = (Button) findViewById(R.id.btnOpMode);
-        btnOpMode.setOnClickListener(new View.OnClickListener() {
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        Button btnContinue = (Button) findViewById(R.id.btnContinue);
+        btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OpMode opMode = scoreState.getOpMode();
 
-                //Swap OpMode
-                if(opMode == OpMode.AUTONOMOUS) {
-                    scoreState.setOpMode(OpMode.TELEOP);
-                    btnOpMode.setText("Teleop");
-                }
-                else {
-                    scoreState.setOpMode(OpMode.AUTONOMOUS);
-                    btnOpMode.setText("Autonomous");
-                }
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("scoreType", scoreState.getScoreType().ordinal());
+                editor.putInt("vortex", scoreState.getVortexType().ordinal());
+                editor.putInt("alliance", scoreState.getAlliance().ordinal());
+
+                editor.apply();
+
+                goToVortexActivity();
             }
         });
-
-        final Spinner ddScoringType = (Spinner) findViewById(R.id.scoringType);
-        ddScoringType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selected = parent.getItemAtPosition(position).toString();
-
-                switch (selected) {
-                    case "Corner Vortex":
-                        scoreState.setVortexType(VortexType.CORNER_VORTEX);
-                        break;
-                    case "Centre Vortex":
-                        scoreState.setVortexType(VortexType.CENTRE_VORTEX);
-                        break;
-                    default:
-                        Log.d("ScoreType", "Score type selected is not valid!");
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        Button btnDecrement = (Button) findViewById(R.id.btnCorrect);
-        btnDecrement.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreState.decrease();
-                updateTotal();
-            }
-        });
-
-        Button btnScore = (Button) findViewById(R.id.btnScore);
-        btnScore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreState.increase();
-                updateTotal();
-            }
-        });
-
-        txtTotal = (TextView) findViewById(R.id.txtTotal);
     }
 
-    private void updateTotal() {
-        txtTotal.setText(String.format(Locale.CANADA, "Total: %d", scoreState.getScore()));
+    public void goToVortexActivity() {
+        Intent intent = new Intent(this, VortexActivity.class);
+        startActivity(intent);
     }
 }
