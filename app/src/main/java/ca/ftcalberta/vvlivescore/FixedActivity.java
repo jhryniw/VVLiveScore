@@ -2,6 +2,7 @@ package ca.ftcalberta.vvlivescore;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -223,6 +224,8 @@ public class FixedActivity extends Activity {
 
     private void sendScore( Alliance alliance, OpMode opMode, String type, int score) {
 
+        Handler h = new Handler();
+
         String strOpMode = "Auto";
         String strScoreType;
         JSONObject updateJson = new JSONObject();
@@ -239,6 +242,7 @@ public class FixedActivity extends Activity {
             e.printStackTrace();
         }
 
-        updater.getHttpConn(updateJson.toString());
+        updater.state = updateJson;
+        h.post(updater.post);
     }
 }
