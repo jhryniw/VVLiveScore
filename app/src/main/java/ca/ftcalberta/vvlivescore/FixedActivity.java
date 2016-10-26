@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,27 +25,6 @@ public class FixedActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fixed);
-
-        final Button btnOpMode = (Button) findViewById(R.id.btnOpMode);
-        btnOpMode.setOnLongClickListener(new View.OnLongClickListener() {
-             @Override
-             public boolean onLongClick(View view) {
-                 //Swap OpMode
-                 if(opMode == OpMode.AUTONOMOUS) {
-                     opMode = OpMode.TELEOP;
-                     beaconValue = 10;
-                     sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
-                     sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
-                     btnOpMode.setText("TeleOp");
-                 }
-                 else {
-                     opMode = OpMode.AUTONOMOUS;
-                     beaconValue = 30;
-                     btnOpMode.setText("Autonomous");
-                 }
-                 return true;
-             }
-        });
 
         final Button btnBeacon1 = (Button) findViewById(R.id.btnBeacon1);
         btnBeacon1.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +103,31 @@ public class FixedActivity extends Activity {
             @Override
             public void onClick(View v) {
                 capScoreButton(Alliance.BLUE, btnBlueCapScore);
+            }
+        });
+
+        LinearLayout parkingBlock = (LinearLayout) findViewById(R.id.layout_parkingScore);
+        final Button btnOpMode = (Button) findViewById(R.id.btnOpMode);
+        btnOpMode.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                //Swap OpMode
+                LinearLayout parkingBlock = (LinearLayout) findViewById(R.id.layout_parkingScore);
+                if(opMode == OpMode.AUTONOMOUS) {
+                    opMode = OpMode.TELEOP;
+                    parkingBlock.setVisibility(LinearLayout.GONE);
+                    beaconValue = 10;
+                    sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
+                    sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
+                    btnOpMode.setText("TeleOp");
+                }
+                else {
+                    opMode = OpMode.AUTONOMOUS;
+                    parkingBlock.setVisibility(LinearLayout.VISIBLE);
+                    beaconValue = 30;
+                    btnOpMode.setText("Autonomous");
+                }
+                return true;
             }
         });
 
