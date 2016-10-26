@@ -112,6 +112,8 @@ public class FixedActivity extends Activity {
             @Override
             public boolean onLongClick(View view) {
                 //Swap OpMode
+                capScores[0] = 0;
+                capScores[1] = 0;
                 LinearLayout parkingBlock = (LinearLayout) findViewById(R.id.layout_parkingScore);
                 if(opMode == OpMode.AUTONOMOUS) {
                     opMode = OpMode.TELEOP;
@@ -119,6 +121,8 @@ public class FixedActivity extends Activity {
                     beaconValue = 10;
                     sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
                     sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
+                    btnRedCapScore.setText("On Floor");
+                    btnBlueCapScore.setText("On Floor");
                     btnOpMode.setText("TeleOp");
                 }
                 else {
@@ -126,6 +130,16 @@ public class FixedActivity extends Activity {
                     parkingBlock.setVisibility(LinearLayout.VISIBLE);
                     beaconValue = 30;
                     btnOpMode.setText("Autonomous");
+                    btnRed1ParkingScore.setText("Not Parked");
+                    btnRed2ParkingScore.setText("Not Parked");
+                    btnBlue1ParkingScore.setText("Not Parked");
+                    btnBlue2ParkingScore.setText("Not Parked");
+                    parkingScores[0][0] = 0;
+                    parkingScores[0][1] = 0;
+                    parkingScores[1][0] = 0;
+                    parkingScores[1][1] = 0;
+                    btnRedCapScore.setText("Not On Floor");
+                    btnBlueCapScore.setText("Not On Floor");
                 }
                 return true;
             }
@@ -141,23 +155,28 @@ public class FixedActivity extends Activity {
         if(opMode == OpMode.TELEOP){
             if(capScores[allianceNum] == 0){
                 capScores[allianceNum] = 10;
+                button.setText("Off Floor");
             } else if(capScores[allianceNum] == 10){
                 capScores[allianceNum] = 20;
+                button.setText("Above 30\"");
             } else if(capScores[allianceNum] == 20){
                 capScores[allianceNum] = 40;
+                button.setText("Capped");
             } else {
                 capScores[allianceNum] = 0;
+                button.setText("On Floor");
             }
         } else { //Autonomous
             if(capScores[allianceNum] == 0){
                 capScores[allianceNum] = 5;
+                button.setText("Touching Floor");
             } else {
                 capScores[allianceNum] = 0;
+                button.setText("Not On Floor");
             }
         }
 
         sendScore(robotAlliance, opMode, "CapBall", capScores[allianceNum]);
-        button.setText("Cap Ball: " + Integer.toString(capScores[allianceNum]));
     }
 
     private void parkingButton(Alliance robotAlliance, int buttonNum, Button button){
@@ -170,34 +189,36 @@ public class FixedActivity extends Activity {
         }
         if(parkingScores[allianceNum][buttonNum - 1] == 0){
             parkingScores[allianceNum][buttonNum - 1] = 5;
+            button.setText("Partial");
         } else if(parkingScores[allianceNum][buttonNum - 1] == 5) {
             parkingScores[allianceNum][buttonNum - 1] = 10;
+            button.setText("Full");
         } else {
             parkingScores[allianceNum][buttonNum - 1] = 0;
+            button.setText("Not Parked");
         }
         sendScore(robotAlliance, opMode, "Parking", parkingScores[allianceNum][0] + parkingScores[allianceNum][1]);
-        button.setText("Parking " + Integer.toString(buttonNum) + ": " + Integer.toString(parkingScores[allianceNum][buttonNum - 1]));
 
     }
 
     private void beaconButton(int beaconNum, Button button) {
-            if(alliances[beaconNum - 1] == Alliance.NONE){
-                redBeaconCount++;
-                button.setBackgroundResource(R.drawable.alliance_button_red);
-                alliances[beaconNum - 1] = Alliance.RED;
-            } else if(alliances[beaconNum - 1] == Alliance.RED){
-                redBeaconCount--;
-                blueBeaconCount++;
-                button.setBackgroundResource(R.drawable.alliance_button_blue);
-                alliances[beaconNum - 1] = Alliance.BLUE;
-            } else if(alliances[beaconNum - 1] == Alliance.BLUE){
-                blueBeaconCount--;
-                redBeaconCount++;
-                button.setBackgroundResource(R.drawable.alliance_button_red);
-                alliances[beaconNum - 1] = Alliance.RED;
-            }
-            sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
-            sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
+        if(alliances[beaconNum - 1] == Alliance.NONE){
+            redBeaconCount++;
+            button.setBackgroundResource(R.drawable.alliance_button_red);
+            alliances[beaconNum - 1] = Alliance.RED;
+        } else if(alliances[beaconNum - 1] == Alliance.RED){
+            redBeaconCount--;
+            blueBeaconCount++;
+            button.setBackgroundResource(R.drawable.alliance_button_blue);
+            alliances[beaconNum - 1] = Alliance.BLUE;
+        } else { //if(alliances[beaconNum - 1] == Alliance.BLUE){
+            blueBeaconCount--;
+            redBeaconCount++;
+            button.setBackgroundResource(R.drawable.alliance_button_red);
+            alliances[beaconNum - 1] = Alliance.RED;
+        }
+        sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
+        sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
     }
 
     private void sendScore( Alliance alliance, OpMode opMode, String type, int score) {
