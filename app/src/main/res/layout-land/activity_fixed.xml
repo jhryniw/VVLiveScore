@@ -25,17 +25,17 @@
             android:layout_alignParentStart="true">
 
             <Button
-                android:text="0"
+                android:text="Parking 1: 0"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginRight="10dp"
-                android:id="@+id/btnRedParkingScore"
+                android:id="@+id/btnRed1ParkingScore"
                 android:textColor="@android:color/white"
                 android:background="@drawable/alliance_button_red" />
 
             <Button
-                android:text="0"
+                android:text="Parking 2: 0"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -46,18 +46,18 @@
                 android:background="@drawable/alliance_button_red" />
 
             <Button
-                android:text="0"
+                android:text="Parking 1: 0"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
-                android:id="@+id/btnBlueParkingScore"
+                android:id="@+id/btnBlue1ParkingScore"
                 android:textColor="@android:color/white"
                 android:background="@drawable/alliance_button_blue" />
 
             <Button
-                android:text="0"
+                android:text="Parking 2: 0"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -78,7 +78,7 @@
             android:layout_alignParentStart="true">
 
             <Button
-                android:text="0"
+                android:text="Cap Ball: 0"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -98,7 +98,7 @@
                 android:textSize="24sp" />
 
             <Button
-                android:text="0"
+                android:text="Cap Ball: 0"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
