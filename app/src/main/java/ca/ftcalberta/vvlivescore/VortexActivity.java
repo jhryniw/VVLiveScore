@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,10 +96,19 @@ public class VortexActivity extends Activity {
             return;
         }
 
+        RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.activity_vortex);
+
         a = Alliance.values()[setupPrefs.getInt("alliance", 0)];
         v = setupPrefs.getString("vortex", "Corner").equals("Corner") ? VortexType.CORNER_VORTEX : VortexType.CENTRE_VORTEX;
 
-        alliancePrefix = a == Alliance.BLUE ? "Blue " : "Red ";
+        if(a == Alliance.BLUE) {
+            alliancePrefix = "Blue ";
+            mainLayout.setBackgroundResource(R.color.FtcLightBlue);
+        }
+        else {
+            alliancePrefix = "Red ";
+            mainLayout.setBackgroundResource(R.color.FtcLightRed);
+        }
 
         if (v == VortexType.CORNER_VORTEX)
             title = alliancePrefix + "Corner Vortex";

@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,8 @@ public class MainActivity extends Activity {
     private String vortexState = "Centre";
     private Alliance allianceState = Alliance.BLUE;
 
+    private RelativeLayout mainLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,8 @@ public class MainActivity extends Activity {
         StrictMode.setThreadPolicy(policy);
 
         setContentView(R.layout.activity_main);
+
+        mainLayout = (RelativeLayout) findViewById(R.id.activity_main);
 
         Button btnScoreType = (Button) findViewById(R.id.btnScoringType);
         btnScoreType.setOnClickListener(new View.OnClickListener() {
@@ -91,11 +96,13 @@ public class MainActivity extends Activity {
                     allianceState = Alliance.RED;
                     btnAlliance.setBackgroundResource(R.drawable.alliance_button_red);
                     btnAlliance.setText("Red");
+                    mainLayout.setBackgroundResource(R.color.FtcLightRed);
                 }
                 else {
                     allianceState = Alliance.BLUE;
                     btnAlliance.setBackgroundResource(R.drawable.alliance_button_blue);
                     btnAlliance.setText("Blue");
+                    mainLayout.setBackgroundResource(R.color.FtcLightBlue);
                 }
             }
         });
