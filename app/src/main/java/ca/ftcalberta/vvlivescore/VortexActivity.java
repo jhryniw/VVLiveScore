@@ -1,17 +1,21 @@
 package ca.ftcalberta.vvlivescore;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
 public class VortexActivity extends Activity {
 
     private ScoreState scoreState = new ScoreState();
+    private TextView txtVortex;
     private TextView txtTotal;
 
     @Override
@@ -55,12 +59,11 @@ public class VortexActivity extends Activity {
         });
 
         txtTotal = (TextView) findViewById(R.id.txtTotal);
+        txtVortex = (TextView) findViewById(R.id.txtVortexActivityTitle);
+
+        applySetupParams();
 
         scoreState.launch();
-    }
-
-    private void updateTotal() {
-        txtTotal.setText(String.format(Locale.CANADA, "Total: %d", scoreState.getScore()));
     }
 
     @Override
@@ -73,5 +76,37 @@ public class VortexActivity extends Activity {
     protected void onResume() {
         super.onResume();
         scoreState.launch();
+    }
+
+    private void updateTotal() {
+        txtTotal.setText(String.format(Locale.CANADA, "Total: %d", scoreState.getScore()));
+    }
+
+    private void applySetupParams() {
+        SharedPreferences setupPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Alliance a;
+        VortexType v;
+        String alliancePrefix, title;
+
+        if (!setupPrefs.contains("vortex") || !setupPrefs.contains("alliance")) {
+            Toast.makeText(getApplicationContext(), "Invalid setup parameters", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        a = Alliance.values()[setupPrefs.getInt("alliance", 0)];
+        v = setupPrefs.getString("vortex", "Corner").equals("Corner") ? VortexType.CORNER_VORTEX : VortexType.CENTRE_VORTEX;
+
+        alliancePrefix = a == Alliance.BLUE ? "Blue " : "Red ";
+
+        if (v == VortexType.CORNER_VORTEX)
+            title = alliancePrefix + "Corner Vortex";
+        else
+            title = alliancePrefix + "Center Vortex";
+
+        txtVortex.setText(title);
+        scoreState.setAlliance(a);
+        scoreState.setVortexType(v);
     }
 }

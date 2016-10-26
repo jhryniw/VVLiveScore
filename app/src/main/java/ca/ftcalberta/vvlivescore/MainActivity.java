@@ -103,12 +103,12 @@ public class MainActivity extends Activity {
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         Button btnContinue = (Button) findViewById(R.id.btnContinue);
         btnContinue.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
 
                 if(scoreTypeState.equals("Vortex")) {
                     SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString("scoreType", scoreTypeState);
                     editor.putString("vortex", vortexState);
                     editor.putInt("alliance", allianceState.ordinal());
 

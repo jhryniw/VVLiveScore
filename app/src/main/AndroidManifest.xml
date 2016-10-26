@@ -21,8 +21,7 @@
         <activity android:name=".VortexActivity" />
 
         <activity android:name=".FixedActivity"
-                android:screenOrientation="landscape"
-                android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
+                android:screenOrientation="landscape" />
     </application>
 
 </manifest>
