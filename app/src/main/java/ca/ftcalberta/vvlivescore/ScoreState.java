@@ -33,17 +33,6 @@ enum ScoreType {
     BlueCapBall
 }
 
-enum VortexType {
-    CORNER_VORTEX,
-    CENTRE_VORTEX,
-    NONE
-}
-
-enum OpMode {
-    AUTONOMOUS,
-    TELEOP
-}
-
 public class ScoreState {
 
     private UUID phoneId = UUID.randomUUID();
@@ -77,7 +66,7 @@ public class ScoreState {
     }
 
     /*
-     *  Property Methods
+     *  Getters and Setters
      */
 
     public OpMode getOpMode() {
