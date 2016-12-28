@@ -33,7 +33,7 @@ public class ScoreUpdater {
     private boolean isPosting = false;
     private Handler mHandle = new Handler();
 
-    private Runnable post = new Runnable() {
+    public Runnable post = new Runnable() {
         @Override
         public void run() {
             try {

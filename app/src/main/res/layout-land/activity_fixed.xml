@@ -26,7 +26,7 @@
             android:layout_alignParentStart="true">
 
             <Button
-                android:text="Parking 1: 0"
+                android:text="Not Parked"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -36,7 +36,7 @@
                 android:background="@drawable/alliance_button_red" />
 
             <Button
-                android:text="Parking 2: 0"
+                android:text="Not Parked"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -47,7 +47,7 @@
                 android:background="@drawable/alliance_button_red" />
 
             <Button
-                android:text="Parking 1: 0"
+                android:text="Not Parked"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -58,7 +58,7 @@
                 android:background="@drawable/alliance_button_blue" />
 
             <Button
-                android:text="Parking 2: 0"
+                android:text="Not Parked"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -79,7 +79,7 @@
             android:layout_alignParentStart="true">
 
             <Button
-                android:text="Cap Ball: 0"
+                android:text="Not On Floor"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -99,7 +99,7 @@
                 android:textSize="24sp" />
 
             <Button
-                android:text="Cap Ball: 0"
+                android:text="Not On Floor"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
