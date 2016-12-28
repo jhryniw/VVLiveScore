@@ -90,16 +90,26 @@ public class ScoreUpdater {
             String responseStr = convertStreamtoString(inputStream);
             jsonObject = new JSONObject(responseStr);//.fromObject(jsonResponse);
 
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (IOException|JSONException e) {
             e.printStackTrace();
         }
+
         return jsonObject;
+    }
+
+    public void sendScore( Alliance alliance, OpMode opMode, String type, int score) {
+
+        String strScoreType = ScoreUpdater.getScoreType(opMode, alliance, type);
+        JSONObject updateJson = new JSONObject();
+
+        try {
+            updateJson.put("\"" + strScoreType +"\"", score);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        getHttpConn(updateJson.toString());
     }
 
     public String convertStreamtoString(InputStream is){
@@ -117,5 +127,10 @@ public class ScoreUpdater {
             e.printStackTrace();
         }
         return  data;
+    }
+
+    public static String getScoreType(OpMode opMode, Alliance alliance, String type) {
+        String strOpMode = opMode == OpMode.AUTONOMOUS ? "Auto" : "Tele";
+        return alliance.toString() + strOpMode + type;
     }
 }

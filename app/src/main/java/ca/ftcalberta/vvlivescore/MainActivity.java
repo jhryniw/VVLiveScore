@@ -32,6 +32,8 @@ public class MainActivity extends Activity {
     private Alliance allianceState = Alliance.BLUE;
 
     private RelativeLayout mainLayout;
+    private LinearLayout vortexBlock;
+    private LinearLayout allianceBlock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,28 +44,42 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         mainLayout = (RelativeLayout) findViewById(R.id.activity_main);
+        vortexBlock = (LinearLayout) findViewById(R.id.vortexBlock);
+        allianceBlock = (LinearLayout) findViewById(R.id.allianceBlock);
 
         Button btnScoreType = (Button) findViewById(R.id.btnScoringType);
         btnScoreType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Button btn = (Button) v;
-                LinearLayout vortexBlock = (LinearLayout) findViewById(R.id.layout_selectVortex);
 
                 //Swap scoring type
                 if(scoreTypeState.equals("Vortex")) {
                     scoreTypeState = "Fixed";
+
                     btn.setText("Fixed");
                     btn.setTextColor(Color.WHITE);
                     btn.setBackgroundResource(R.drawable.decrement_button);
+
                     vortexBlock.setVisibility(LinearLayout.GONE);
+                    allianceBlock.setVisibility(LinearLayout.GONE);
+
+                    mainLayout.setBackgroundColor(Color.WHITE);
                 }
                 else { // == "Fixed"
                     scoreTypeState = "Vortex";
+
                     btn.setText("Vortex");
                     btn.setTextColor(Color.BLACK);
                     btn.setBackgroundResource(R.drawable.score_button);
+
                     vortexBlock.setVisibility(LinearLayout.VISIBLE);
+                    allianceBlock.setVisibility(LinearLayout.VISIBLE);
+
+                    if(allianceState == Alliance.BLUE)
+                        mainLayout.setBackgroundResource(R.color.FtcLightBlue);
+                    else
+                        mainLayout.setBackgroundResource(R.color.FtcLightRed);
                 }
             }
         });

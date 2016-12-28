@@ -14,12 +14,6 @@ import static ca.ftcalberta.vvlivescore.VortexType.*;
  * Created by s on 10/10/2016.
  */
 
-enum Alliance{
-    RED,
-    BLUE,
-    NONE
-}
-
 enum ScoreType {
     RedAutoCentre,
     BlueAutoCentre,
@@ -52,7 +46,7 @@ enum OpMode {
 
 public class ScoreState {
 
-    private UUID phoneId;
+    private UUID phoneId = UUID.randomUUID();
 
     private ScoreUpdater updater;
 
@@ -69,17 +63,14 @@ public class ScoreState {
      */
 
     public ScoreState() {
-        this(0, Alliance.BLUE, CORNER_VORTEX, OpMode.AUTONOMOUS);
+        this(Alliance.BLUE, CORNER_VORTEX, OpMode.AUTONOMOUS);
     }
 
-    public ScoreState(int s, Alliance a, VortexType v, OpMode o) {
-        score = s;
+    public ScoreState(Alliance a, VortexType v, OpMode o) {
         alliance = a;
         opMode = o;
         vortexType = v;
         setIncrement();
-
-        phoneId = UUID.randomUUID();
 
         updater = new ScoreUpdater();
         updateState();
@@ -189,7 +180,7 @@ public class ScoreState {
         JSONObject updateJson = new JSONObject();
 
         try {
-            updateJson.put("\"" + type.toString() +"\"",score);
+            updateJson.put("\"" + type.toString() +"\"", score);
             //updateJson.put("phoneId", phoneId.toString());
             //updateJson.put("scoreId", UUID.randomUUID().toString());
             //updateJson.put("timeStamp", System.currentTimeMillis());

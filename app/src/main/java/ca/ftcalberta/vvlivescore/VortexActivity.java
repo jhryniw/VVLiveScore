@@ -25,19 +25,22 @@ public class VortexActivity extends Activity {
         setContentView(R.layout.activity_vortex);
 
         final Button btnOpMode = (Button) findViewById(R.id.btnOpMode);
-        btnOpMode.setOnClickListener(new View.OnClickListener() {
+        btnOpMode.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 OpMode opMode = scoreState.getOpMode();
 
                 //Swap OpMode
                 if (opMode == OpMode.AUTONOMOUS) {
                     scoreState.setOpMode(OpMode.TELEOP);
                     btnOpMode.setText("Teleop");
-                } else {
+                }
+                else {
                     scoreState.setOpMode(OpMode.AUTONOMOUS);
                     btnOpMode.setText("Autonomous");
                 }
+
+                return true;
             }
         });
 

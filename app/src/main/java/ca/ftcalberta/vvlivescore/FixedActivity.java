@@ -117,8 +117,8 @@ public class FixedActivity extends Activity {
                     opMode = OpMode.TELEOP;
                     parkingBlock.setVisibility(LinearLayout.GONE);
                     beaconValue = 10;
-                    sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
-                    sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
+                    updater.sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
+                    updater.sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
                     btnOpMode.setText("TeleOp");
                 }
                 else {
@@ -156,7 +156,7 @@ public class FixedActivity extends Activity {
             }
         }
 
-        sendScore(robotAlliance, opMode, "CapBall", capScores[allianceNum]);
+        updater.sendScore(robotAlliance, opMode, "CapBall", capScores[allianceNum]);
         button.setText("Cap Ball: " + Integer.toString(capScores[allianceNum]));
     }
 
@@ -175,7 +175,7 @@ public class FixedActivity extends Activity {
         } else {
             parkingScores[allianceNum][buttonNum - 1] = 0;
         }
-        sendScore(robotAlliance, opMode, "Parking", parkingScores[allianceNum][0] + parkingScores[allianceNum][1]);
+        updater.sendScore(robotAlliance, opMode, "Parking", parkingScores[allianceNum][0] + parkingScores[allianceNum][1]);
         button.setText("Parking " + Integer.toString(buttonNum) + ": " + Integer.toString(parkingScores[allianceNum][buttonNum - 1]));
 
     }
@@ -196,28 +196,7 @@ public class FixedActivity extends Activity {
                 button.setBackgroundResource(R.drawable.alliance_button_red);
                 alliances[beaconNum - 1] = Alliance.RED;
             }
-            sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
-            sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
-    }
-
-    private void sendScore( Alliance alliance, OpMode opMode, String type, int score) {
-
-        String strOpMode = "Auto";
-        String strScoreType;
-        JSONObject updateJson = new JSONObject();
-
-        if(opMode == OpMode.TELEOP){
-            strOpMode = "Tele";
-        }
-        strScoreType = alliance.toString() + strOpMode + type;
-
-        try {
-            updateJson.put("\"" + strScoreType +"\"", score);
-         }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        updater.getHttpConn(updateJson.toString());
+            updater.sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
+            updater.sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
     }
 }
