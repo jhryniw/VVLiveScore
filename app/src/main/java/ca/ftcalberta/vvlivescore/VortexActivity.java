@@ -17,6 +17,7 @@ public class VortexActivity extends Activity {
     private VortexState vortexState = new VortexState();
     private TextView txtVortex;
     private TextView txtTotal;
+    private TextView txtCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class VortexActivity extends Activity {
                     vortexState.setOpMode(OpMode.AUTONOMOUS);
                     btnOpMode.setText("Autonomous");
                 }
-
+                updateTotal();
                 return true;
             }
         });
@@ -62,6 +63,7 @@ public class VortexActivity extends Activity {
         });
 
         txtTotal = (TextView) findViewById(R.id.txtTotal);
+        txtCount = (TextView) findViewById(R.id.txtCount);
         txtVortex = (TextView) findViewById(R.id.txtVortexActivityTitle);
 
         applySetupParams();
@@ -82,7 +84,8 @@ public class VortexActivity extends Activity {
     }
 
     private void updateTotal() {
-        txtTotal.setText(String.format(Locale.CANADA, "Total: %d", vortexState.getScore()));
+        txtTotal.setText(String.format(Locale.CANADA, "Score: %d", vortexState.getScore()));
+        txtCount.setText(String.format(Locale.CANADA, "Count: %d", vortexState.getCount()));
     }
 
     private void applySetupParams() {
