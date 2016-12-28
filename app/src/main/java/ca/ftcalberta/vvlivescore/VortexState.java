@@ -28,8 +28,8 @@ public class VortexState {
     /*
      *  Constructors
      */
-    public VortexState(Alliance a, VortexType v) {
-        this(a, v, OpMode.AUTONOMOUS);
+    public VortexState() {
+        this(Alliance.BLUE, VortexType.CORNER_VORTEX, OpMode.AUTONOMOUS);
     }
     public VortexState(Alliance a, VortexType v, OpMode o) {
         alliance = a;

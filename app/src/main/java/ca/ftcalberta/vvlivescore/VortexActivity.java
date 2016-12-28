@@ -14,7 +14,7 @@ import java.util.Locale;
 
 public class VortexActivity extends Activity {
 
-    private ScoreState scoreState = new ScoreState();
+    private VortexState vortexState = new VortexState();
     private TextView txtVortex;
     private TextView txtTotal;
 
@@ -27,15 +27,15 @@ public class VortexActivity extends Activity {
         btnOpMode.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                OpMode opMode = scoreState.getOpMode();
+                OpMode opMode = vortexState.getOpMode();
 
                 //Swap OpMode
                 if (opMode == OpMode.AUTONOMOUS) {
-                    scoreState.setOpMode(OpMode.TELEOP);
+                    vortexState.setOpMode(OpMode.TELEOP);
                     btnOpMode.setText("Teleop");
                 }
                 else {
-                    scoreState.setOpMode(OpMode.AUTONOMOUS);
+                    vortexState.setOpMode(OpMode.AUTONOMOUS);
                     btnOpMode.setText("Autonomous");
                 }
 
@@ -47,7 +47,7 @@ public class VortexActivity extends Activity {
         btnDecrement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoreState.decrease();
+                vortexState.decrement();
                 updateTotal();
             }
         });
@@ -56,7 +56,7 @@ public class VortexActivity extends Activity {
         btnScore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                scoreState.increase();
+                vortexState.increment();
                 updateTotal();
             }
         });
@@ -66,23 +66,23 @@ public class VortexActivity extends Activity {
 
         applySetupParams();
 
-        scoreState.launch();
+        vortexState.launch();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        scoreState.halt();
+        vortexState.halt();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        scoreState.launch();
+        vortexState.launch();
     }
 
     private void updateTotal() {
-        txtTotal.setText(String.format(Locale.CANADA, "Total: %d", scoreState.getScore()));
+        txtTotal.setText(String.format(Locale.CANADA, "Total: %d", vortexState.getScore()));
     }
 
     private void applySetupParams() {
@@ -122,7 +122,7 @@ public class VortexActivity extends Activity {
             title = alliancePrefix + "Center Vortex";
 
         txtVortex.setText(title);
-        scoreState.setAlliance(a);
-        scoreState.setVortexType(v);
+        vortexState.setAlliance(a);
+        vortexState.setVortexType(v);
     }
 }
