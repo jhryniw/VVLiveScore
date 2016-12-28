@@ -3,7 +3,6 @@ package ca.ftcalberta.vvlivescore;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -100,6 +99,7 @@ public class VortexActivity extends Activity {
         }
 
         RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.activity_vortex);
+        Button btnScore = (Button) findViewById(R.id.btnScore);
 
         a = Alliance.values()[setupPrefs.getInt("alliance", 0)];
         v = setupPrefs.getString("vortex", "Corner").equals("Corner") ? VortexType.CORNER_VORTEX : VortexType.CENTRE_VORTEX;
@@ -107,10 +107,13 @@ public class VortexActivity extends Activity {
         if(a == Alliance.BLUE) {
             alliancePrefix = "Blue ";
             mainLayout.setBackgroundResource(R.color.FtcLightBlue);
+            btnScore.setBackgroundResource(R.drawable.alliance_button_blue);
+
         }
         else {
             alliancePrefix = "Red ";
             mainLayout.setBackgroundResource(R.color.FtcLightRed);
+            btnScore.setBackgroundResource(R.drawable.alliance_button_red);
         }
 
         if (v == VortexType.CORNER_VORTEX)
