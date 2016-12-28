@@ -17,7 +17,8 @@ public class VortexState {
 
     private int autoScore = 0;
     private int teleScore = 0;
-    private int count = 0;
+    private int autoCount = 0;
+    private int teleCount = 0;
 
     private OpMode opMode;
     private VortexType type;
@@ -74,7 +75,7 @@ public class VortexState {
     public int getScore(){
         return opMode == OpMode.AUTONOMOUS ? autoScore : teleScore;
     }
-    public int getCount() { return count; }
+    public int getCount() { return opMode == OpMode.AUTONOMOUS ? autoCount : teleCount; }
 
     public void setIncrement() {
         if(type == VortexType.CORNER_VORTEX && opMode == OpMode.AUTONOMOUS){
@@ -93,29 +94,37 @@ public class VortexState {
      */
 
     public void increment() {
-        if(opMode == OpMode.AUTONOMOUS)
+        if(opMode == OpMode.AUTONOMOUS) {
             autoScore += incrementAmount;
-        else
+            autoCount++;
+        }
+        else {
             teleScore += incrementAmount;
+            teleCount++;
+        }
 
-        count++;
         updateState();
     }
 
     public void decrement() {
-        if(opMode == OpMode.AUTONOMOUS)
+        if(opMode == OpMode.AUTONOMOUS) {
             autoScore -= incrementAmount;
-        else
+            autoCount--;
+
+            if (autoScore < 0)
+                autoScore = 0;
+            if (autoCount < 0)
+                autoCount = 0;
+        }
+        else {
             teleScore -= incrementAmount;
+            teleCount--;
 
-        count--;
-
-        if(autoScore < 0)
-            autoScore = 0;
-        if(teleScore < 0) //Could be else if...
-            teleScore = 0;
-        if(count < 0)
-            count = 0;
+            if (teleScore < 0)
+                teleScore = 0;
+            if (teleCount < 0)
+                teleCount = 0;
+        }
 
         updateState();
     }
