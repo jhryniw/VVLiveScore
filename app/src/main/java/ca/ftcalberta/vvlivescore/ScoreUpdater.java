@@ -131,6 +131,6 @@ public class ScoreUpdater {
 
     public static String getScoreType(OpMode opMode, Alliance alliance, String type) {
         String strOpMode = opMode == OpMode.AUTONOMOUS ? "Auto" : "Tele";
-        return alliance.toString() + strOpMode + type;
+        return alliance + strOpMode + type;
     }
 }

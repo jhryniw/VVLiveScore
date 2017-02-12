@@ -9,7 +9,19 @@ import org.json.JSONObject;
 
 enum VortexType {
     CORNER_VORTEX,
-    CENTRE_VORTEX
+    CENTRE_VORTEX;
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case CORNER_VORTEX:
+                return "Corner";
+            case CENTRE_VORTEX:
+                return "Centre";
+            default:
+                return super.toString();
+        }
+    }
 }
 
 public class VortexState {
@@ -133,23 +145,25 @@ public class VortexState {
      *  Update Methods
      */
 
-    public void launch() {
+    void launch() {
         updater.launch();
     }
 
-    public void halt() {
+    void halt() {
         updater.halt();
     }
 
-    private static String vortexTypeToString(VortexType v) {
-        return v == VortexType.CENTRE_VORTEX ? "Centre" : "Corner";
+    //TODO: Add reset function
+
+    void reset() {
+
     }
 
     private void updateState() {
         JSONObject updateJson = new JSONObject();
 
         try {
-            updateJson.put("\"" + ScoreUpdater.getScoreType(opMode, alliance, vortexTypeToString(type)) +"\"", getScore());
+            updateJson.put("\"" + ScoreUpdater.getScoreType(opMode, alliance, type.toString()) +"\"", getScore());
             //updateJson.put("timeStamp", System.currentTimeMillis());
         }
         catch (JSONException e) {
