@@ -153,14 +153,19 @@ public class VortexState {
         updater.halt();
     }
 
-    //TODO: Add reset function
-
     void reset() {
+        autoScore = 0;
+        autoCount = 0;
 
+        teleScore = 0;
+        teleCount = 0;
+
+        updater.sendScore(alliance, OpMode.AUTONOMOUS, type.toString(), 0);
+        updater.sendScore(alliance, OpMode.TELEOP, type.toString(), 0);
     }
 
     private void updateState() {
-        JSONObject updateJson = new JSONObject();
+        /*JSONObject updateJson = new JSONObject();
 
         try {
             updateJson.put("\"" + ScoreUpdater.getScoreType(opMode, alliance, type.toString()) +"\"", getScore());
@@ -170,6 +175,8 @@ public class VortexState {
             e.printStackTrace();
         }
 
-        updater.state = updateJson;
+        updater.setState(updateJson);*/
+
+        updater.sendScore(alliance, opMode, type.toString(), getScore());
     }
 }

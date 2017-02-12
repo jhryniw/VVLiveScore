@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">VVLivescore</string>
+    <string name="autonomous">Autonomous</string>
+    <string name="teleop">Teleop</string>
 </resources>
