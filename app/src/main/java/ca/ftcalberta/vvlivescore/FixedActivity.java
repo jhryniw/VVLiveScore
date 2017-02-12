@@ -148,6 +148,18 @@ public class FixedActivity extends Activity {
 
     }
 
+    @Override
+    public void onBackPressed(){
+        updater.sendScore(Alliance.BLUE, opMode, "Parking", 0);
+        updater.sendScore(Alliance.RED, opMode, "Parking", 0);
+        updater.sendScore(Alliance.BLUE, opMode, "Beacons", 0);
+        updater.sendScore(Alliance.RED, opMode, "Beacons", 0);
+        updater.sendScore(Alliance.BLUE, opMode, "CapBall", 0);
+        updater.sendScore(Alliance.RED, opMode, "CapBall", 0);
+
+        super.onBackPressed();
+    }
+
     private void capScoreButton(Alliance robotAlliance, Button button){
         int allianceNum = 0;
         if(robotAlliance == Alliance.BLUE){
