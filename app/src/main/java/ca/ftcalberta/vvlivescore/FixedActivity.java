@@ -34,6 +34,7 @@ public class FixedActivity extends Activity {
                 beaconButton(1, btnBeacon1);
             }
         });
+        btnBeacon1.setOnLongClickListener(beaconLongClick(1, btnBeacon1));
 
         final Button btnBeacon2 = (Button) findViewById(R.id.btnBeacon2);
         btnBeacon2.setOnClickListener(new View.OnClickListener() {
@@ -42,7 +43,8 @@ public class FixedActivity extends Activity {
                 beaconButton(2, btnBeacon2);
             }
         });
-
+        btnBeacon2.setOnLongClickListener(beaconLongClick(2, btnBeacon1));
+        
         final Button btnBeacon3 = (Button) findViewById(R.id.btnBeacon3);
         btnBeacon3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +52,7 @@ public class FixedActivity extends Activity {
                 beaconButton(3, btnBeacon3);
             }
         });
+        btnBeacon3.setOnLongClickListener(beaconLongClick(3, btnBeacon1));
 
         final Button btnBeacon4 = (Button) findViewById(R.id.btnBeacon4);
         btnBeacon4.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +61,7 @@ public class FixedActivity extends Activity {
                 beaconButton(4, btnBeacon4);
             }
         });
+        btnBeacon4.setOnLongClickListener(beaconLongClick(4, btnBeacon1));
 
         final Button btnRed1ParkingScore = (Button) findViewById(R.id.btnRed1ParkingScore);
         btnRed1ParkingScore.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +166,10 @@ public class FixedActivity extends Activity {
         updater.sendScore(Alliance.RED, OpMode.TELEOP, "Beacons", 0);
         updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "CapBall", 0);
         updater.sendScore(Alliance.RED, OpMode.TELEOP, "CapBall", 0);
+        alliances[0] = Alliance.NONE;
+        alliances[1] = Alliance.NONE;
+        alliances[2] = Alliance.NONE;
+        alliances[3] = Alliance.NONE;
     }
 
     @Override
@@ -226,10 +234,29 @@ public class FixedActivity extends Activity {
 
     }
 
+    private View.OnLongClickListener beaconLongClick(final int beaconNum, final Button button) {
+        return new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                if(alliances[beaconNum - 1] == Alliance.RED){
+                    redBeaconCount--;
+                } else if(alliances[beaconNum - 1] == Alliance.BLUE){
+                    blueBeaconCount--;
+                }
+                alliances[beaconNum - 1] = Alliance.NONE;
+                button.setBackgroundResource(R.drawable.alliance_button_red);
+                updater.sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
+                updater.sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
+
+                return true;
+            }
+        };
+    }
+
     private void beaconButton(int beaconNum, Button button) {
             if(alliances[beaconNum - 1] == Alliance.NONE){
                 redBeaconCount++;
-                button.setBackgroundResource(R.drawable.alliance_button_red);
                 alliances[beaconNum - 1] = Alliance.RED;
             } else if(alliances[beaconNum - 1] == Alliance.RED){
                 redBeaconCount--;
