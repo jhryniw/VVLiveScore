@@ -170,6 +170,7 @@ public class FixedActivity extends Activity {
         alliances[1] = Alliance.NONE;
         alliances[2] = Alliance.NONE;
         alliances[3] = Alliance.NONE;
+
     }
 
     @Override
@@ -258,6 +259,7 @@ public class FixedActivity extends Activity {
             if(alliances[beaconNum - 1] == Alliance.NONE){
                 redBeaconCount++;
                 alliances[beaconNum - 1] = Alliance.RED;
+                button.setBackgroundResource(R.drawable.alliance_button_red);
             } else if(alliances[beaconNum - 1] == Alliance.RED){
                 redBeaconCount--;
                 blueBeaconCount++;
