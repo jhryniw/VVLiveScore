@@ -150,12 +150,18 @@ public class FixedActivity extends Activity {
 
     @Override
     public void onBackPressed(){
-        updater.sendScore(Alliance.BLUE, opMode, "Parking", 0);
-        updater.sendScore(Alliance.RED, opMode, "Parking", 0);
-        updater.sendScore(Alliance.BLUE, opMode, "Beacons", 0);
-        updater.sendScore(Alliance.RED, opMode, "Beacons", 0);
-        updater.sendScore(Alliance.BLUE, opMode, "CapBall", 0);
-        updater.sendScore(Alliance.RED, opMode, "CapBall", 0);
+        updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "Parking", 0);
+        updater.sendScore(Alliance.RED, OpMode.AUTONOMOUS, "Parking", 0);
+        updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "Beacons", 0);
+        updater.sendScore(Alliance.RED, OpMode.AUTONOMOUS, "Beacons", 0);
+        updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "CapBall", 0);
+        updater.sendScore(Alliance.RED, OpMode.AUTONOMOUS, "CapBall", 0);
+        updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "Parking", 0);
+        updater.sendScore(Alliance.RED, OpMode.TELEOP, "Parking", 0);
+        updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "Beacons", 0);
+        updater.sendScore(Alliance.RED, OpMode.TELEOP, "Beacons", 0);
+        updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "CapBall", 0);
+        updater.sendScore(Alliance.RED, OpMode.TELEOP, "CapBall", 0);
 
         super.onBackPressed();
     }
