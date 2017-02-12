@@ -2,4 +2,7 @@
     <string name="app_name">VVLivescore</string>
     <string name="autonomous">Autonomous</string>
     <string name="teleop">Teleop</string>
+    <string name="on_floor">On Floor</string>
+    <string name="not_parked">Not Parked</string>
+    <string name="not_on_floor">Not On Floor</string>
 </resources>

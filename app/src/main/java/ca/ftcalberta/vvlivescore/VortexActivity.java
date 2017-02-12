@@ -32,8 +32,8 @@ public class VortexActivity extends Activity {
         setContentView(R.layout.activity_vortex);
 
         resetDialog = new AlertDialog.Builder(this)
-                .setTitle("Score Reset")
-                .setMessage("Warning: You are about to reset the score.")
+                .setTitle("Warning: Score Reset")
+                .setMessage("You are about to reset the score.")
                 .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

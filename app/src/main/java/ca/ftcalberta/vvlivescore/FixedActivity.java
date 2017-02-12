@@ -21,46 +21,27 @@ public class FixedActivity extends Activity {
     private Alliance[] alliances = {Alliance.NONE, Alliance.NONE, Alliance.NONE, Alliance.NONE};
     private ScoreUpdater updater = new ScoreUpdater();
 
+    Button btnBeacon1, btnBeacon2, btnBeacon3, btnBeacon4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fixed);
 
-        final Button btnBeacon1 = (Button) findViewById(R.id.btnBeacon1);
-        btnBeacon1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                beaconButton(1, btnBeacon1);
-            }
-        });
+        btnBeacon1 = (Button) findViewById(R.id.btnBeacon1);
+        btnBeacon1.setOnClickListener(beaconClick(1, btnBeacon1));
         btnBeacon1.setOnLongClickListener(beaconLongClick(1, btnBeacon1));
 
-        final Button btnBeacon2 = (Button) findViewById(R.id.btnBeacon2);
-        btnBeacon2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                beaconButton(2, btnBeacon2);
-            }
-        });
+        btnBeacon2 = (Button) findViewById(R.id.btnBeacon2);
+        btnBeacon2.setOnClickListener(beaconClick(2, btnBeacon2));
         btnBeacon2.setOnLongClickListener(beaconLongClick(2, btnBeacon2));
 
-        final Button btnBeacon3 = (Button) findViewById(R.id.btnBeacon3);
-        btnBeacon3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                beaconButton(3, btnBeacon3);
-            }
-        });
+        btnBeacon3 = (Button) findViewById(R.id.btnBeacon3);
+        btnBeacon3.setOnClickListener(beaconClick(3, btnBeacon3));
         btnBeacon3.setOnLongClickListener(beaconLongClick(3, btnBeacon3));
 
-        final Button btnBeacon4 = (Button) findViewById(R.id.btnBeacon4);
-        btnBeacon4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                beaconButton(4, btnBeacon4);
-            }
-        });
+        btnBeacon4 = (Button) findViewById(R.id.btnBeacon4);
+        btnBeacon4.setOnClickListener(beaconClick(4, btnBeacon4));
         btnBeacon4.setOnLongClickListener(beaconLongClick(4, btnBeacon4));
 
         final Button btnRed1ParkingScore = (Button) findViewById(R.id.btnRed1ParkingScore);
@@ -126,25 +107,31 @@ public class FixedActivity extends Activity {
                     beaconValue = 10;
                     updater.sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
                     updater.sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
-                    btnRedCapScore.setText("On Floor");
-                    btnBlueCapScore.setText("On Floor");
-                    btnOpMode.setText("TeleOp");
+                    btnRedCapScore.setText(R.string.on_floor);
+                    btnBlueCapScore.setText(R.string.on_floor);
+                    btnOpMode.setText(R.string.teleop);
                 }
                 else {
                     opMode = OpMode.AUTONOMOUS;
                     parkingBlock.setVisibility(LinearLayout.VISIBLE);
                     beaconValue = 30;
-                    btnOpMode.setText("Autonomous");
-                    btnRed1ParkingScore.setText("Not Parked");
-                    btnRed2ParkingScore.setText("Not Parked");
-                    btnBlue1ParkingScore.setText("Not Parked");
-                    btnBlue2ParkingScore.setText("Not Parked");
+                    btnOpMode.setText(R.string.autonomous);
+                    btnRed1ParkingScore.setText(R.string.not_parked);
+                    btnRed2ParkingScore.setText(R.string.not_parked);
+                    btnBlue1ParkingScore.setText(R.string.not_parked);
+                    btnBlue2ParkingScore.setText(R.string.not_parked);
                     parkingScores[0][0] = 0;
                     parkingScores[0][1] = 0;
                     parkingScores[1][0] = 0;
                     parkingScores[1][1] = 0;
-                    btnRedCapScore.setText("Not On Floor");
-                    btnBlueCapScore.setText("Not On Floor");
+                    btnRedCapScore.setText(R.string.not_on_floor);
+                    btnBlueCapScore.setText(R.string.not_on_floor);
+
+                    btnBeacon1.setBackgroundResource(R.drawable.score_button);
+                    btnBeacon2.setBackgroundResource(R.drawable.score_button);
+                    btnBeacon3.setBackgroundResource(R.drawable.score_button);
+                    btnBeacon4.setBackgroundResource(R.drawable.score_button);
+
                     resetScores();
                 }
                 return true;
@@ -166,11 +153,11 @@ public class FixedActivity extends Activity {
         updater.sendScore(Alliance.RED, OpMode.TELEOP, "Beacons", 0);
         updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "CapBall", 0);
         updater.sendScore(Alliance.RED, OpMode.TELEOP, "CapBall", 0);
+
         alliances[0] = Alliance.NONE;
         alliances[1] = Alliance.NONE;
         alliances[2] = Alliance.NONE;
         alliances[3] = Alliance.NONE;
-
     }
 
     @Override
@@ -196,7 +183,7 @@ public class FixedActivity extends Activity {
                 button.setText("Capped");
             } else {
                 capScores[allianceNum] = 0;
-                button.setText("On Floor");
+                button.setText(R.string.on_floor);
             }
         } else { //Autonomous
             if(capScores[allianceNum] == 0){
@@ -204,7 +191,7 @@ public class FixedActivity extends Activity {
                 button.setText("Touching Floor");
             } else {
                 capScores[allianceNum] = 0;
-                button.setText("Not On Floor");
+                button.setText(R.string.not_on_floor);
             }
         }
 
@@ -255,23 +242,28 @@ public class FixedActivity extends Activity {
         };
     }
 
-    private void beaconButton(int beaconNum, Button button) {
-            if(alliances[beaconNum - 1] == Alliance.NONE){
-                redBeaconCount++;
-                alliances[beaconNum - 1] = Alliance.RED;
-                button.setBackgroundResource(R.drawable.alliance_button_red);
-            } else if(alliances[beaconNum - 1] == Alliance.RED){
-                redBeaconCount--;
-                blueBeaconCount++;
-                button.setBackgroundResource(R.drawable.alliance_button_blue);
-                alliances[beaconNum - 1] = Alliance.BLUE;
-            } else if(alliances[beaconNum - 1] == Alliance.BLUE){
-                blueBeaconCount--;
-                redBeaconCount++;
-                button.setBackgroundResource(R.drawable.alliance_button_red);
-                alliances[beaconNum - 1] = Alliance.RED;
+    private View.OnClickListener beaconClick(final int beaconNum, final Button button) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(alliances[beaconNum - 1] == Alliance.NONE){
+                    redBeaconCount++;
+                    alliances[beaconNum - 1] = Alliance.RED;
+                    button.setBackgroundResource(R.drawable.alliance_button_red);
+                } else if(alliances[beaconNum - 1] == Alliance.RED){
+                    redBeaconCount--;
+                    blueBeaconCount++;
+                    button.setBackgroundResource(R.drawable.alliance_button_blue);
+                    alliances[beaconNum - 1] = Alliance.BLUE;
+                } else if(alliances[beaconNum - 1] == Alliance.BLUE){
+                    blueBeaconCount--;
+                    redBeaconCount++;
+                    button.setBackgroundResource(R.drawable.alliance_button_red);
+                    alliances[beaconNum - 1] = Alliance.RED;
+                }
+                updater.sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
+                updater.sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
             }
-            updater.sendScore(Alliance.RED, opMode, "Beacons", redBeaconCount * beaconValue);
-            updater.sendScore(Alliance.BLUE, opMode, "Beacons", blueBeaconCount * beaconValue);
+        };
     }
 }
