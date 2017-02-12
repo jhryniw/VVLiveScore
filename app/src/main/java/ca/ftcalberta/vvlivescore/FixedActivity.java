@@ -130,17 +130,18 @@ public class FixedActivity extends Activity {
                     opMode = OpMode.AUTONOMOUS;
                     parkingBlock.setVisibility(LinearLayout.VISIBLE);
                     beaconValue = 30;
-                    //btnOpMode.setText("Autonomous");
-                    //btnRed1ParkingScore.setText("Not Parked");
-                    //btnRed2ParkingScore.setText("Not Parked");
-                    //btnBlue1ParkingScore.setText("Not Parked");
-                    //btnBlue2ParkingScore.setText("Not Parked");
+                    btnOpMode.setText("Autonomous");
+                    btnRed1ParkingScore.setText("Not Parked");
+                    btnRed2ParkingScore.setText("Not Parked");
+                    btnBlue1ParkingScore.setText("Not Parked");
+                    btnBlue2ParkingScore.setText("Not Parked");
                     parkingScores[0][0] = 0;
                     parkingScores[0][1] = 0;
                     parkingScores[1][0] = 0;
                     parkingScores[1][1] = 0;
-                    //btnRedCapScore.setText("Not On Floor");
-                    //btnBlueCapScore.setText("Not On Floor");
+                    btnRedCapScore.setText("Not On Floor");
+                    btnBlueCapScore.setText("Not On Floor");
+                    resetScores();
                 }
                 return true;
             }
@@ -148,8 +149,7 @@ public class FixedActivity extends Activity {
 
     }
 
-    @Override
-    public void onBackPressed(){
+    private void resetScores(){
         updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "Parking", 0);
         updater.sendScore(Alliance.RED, OpMode.AUTONOMOUS, "Parking", 0);
         updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "Beacons", 0);
@@ -162,7 +162,11 @@ public class FixedActivity extends Activity {
         updater.sendScore(Alliance.RED, OpMode.TELEOP, "Beacons", 0);
         updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "CapBall", 0);
         updater.sendScore(Alliance.RED, OpMode.TELEOP, "CapBall", 0);
+    }
 
+    @Override
+    public void onBackPressed(){
+        resetScores();
         super.onBackPressed();
     }
 
