@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".VortexActivity" />
+        <activity android:name=".VortexActivity"
+                    android:screenOrientation="portrait" />
 
         <activity android:name=".FixedActivity"
                 android:screenOrientation="landscape" />

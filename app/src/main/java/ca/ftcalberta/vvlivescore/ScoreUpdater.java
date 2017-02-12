@@ -13,6 +13,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.UUID;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.StatusLine;
@@ -28,34 +30,29 @@ import cz.msebera.android.httpclient.impl.client.HttpClientBuilder;
 
 public class ScoreUpdater {
 
-    public JSONObject state;
+    private JSONObject state;
+    private ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(4);
+
 
     private boolean isPosting = false;
     private Handler mHandle = new Handler();
 
-    public Runnable post = new Runnable() {
+    private Runnable post = new Runnable() {
         @Override
         public void run() {
-            try {
-                JSONObject resp = getHttpConn(state.toString());
-
-                //TODO: Check for resp code 200
-
-                if(isPosting)
-                    mHandle.postDelayed(post, 1000);
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-                isPosting = false;
-            }
+        try {
+            getHttpConn(state.toString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            isPosting = false;
+        }
         }
     };
 
-    public ScoreUpdater() {
-        state = new JSONObject();
-    }
+    ScoreUpdater() { state = new JSONObject(); }
 
-    public void launch() {
+    void launch() {
         if (isPosting)
             return;
 
@@ -63,11 +60,15 @@ public class ScoreUpdater {
         mHandle.postDelayed(post, 1000);
     }
 
-    public void halt() {
+    void halt() {
         isPosting = false;
     }
 
-    public JSONObject getHttpConn(String json){
+    void setState(JSONObject newState) {
+        state = newState;
+    }
+
+    private void getHttpConn(String json){
         JSONObject jsonObject = null;
 
         try {
@@ -85,19 +86,18 @@ public class ScoreUpdater {
 
             HttpResponse response = client.execute(httpPost); // execute the post
             StatusLine statusLine = response.getStatusLine();
-            Log.d("Status Line: ", statusLine.toString());
-            InputStream inputStream = response.getEntity().getContent();
-            String responseStr = convertStreamtoString(inputStream);
-            jsonObject = new JSONObject(responseStr);//.fromObject(jsonResponse);
+            Log.d("Status Line", statusLine.toString());
 
-        } catch (IOException|JSONException e) {
+            //InputStream inputStream = response.getEntity().getContent();
+            //String responseStr = convertStreamtoString(inputStream);
+            //jsonObject = new JSONObject(responseStr);//.fromObject(jsonResponse);
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return jsonObject;
     }
 
-    public void sendScore( Alliance alliance, OpMode opMode, String type, int score) {
+    void sendScore( Alliance alliance, OpMode opMode, String type, int score) {
 
         String strScoreType = ScoreUpdater.getScoreType(opMode, alliance, type);
         JSONObject updateJson = new JSONObject();
@@ -109,7 +109,13 @@ public class ScoreUpdater {
             e.printStackTrace();
         }
 
-        getHttpConn(updateJson.toString());
+        final String jsonString = updateJson.toString();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                getHttpConn(jsonString);
+            }
+        });
     }
 
     public String convertStreamtoString(InputStream is){
@@ -129,7 +135,7 @@ public class ScoreUpdater {
         return  data;
     }
 
-    public static String getScoreType(OpMode opMode, Alliance alliance, String type) {
+    static String getScoreType(OpMode opMode, Alliance alliance, String type) {
         String strOpMode = opMode == OpMode.AUTONOMOUS ? "Auto" : "Tele";
         return alliance + strOpMode + type;
     }

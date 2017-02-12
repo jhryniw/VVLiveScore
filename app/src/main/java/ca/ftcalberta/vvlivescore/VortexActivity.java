@@ -1,6 +1,8 @@
 package ca.ftcalberta.vvlivescore;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
@@ -12,33 +14,55 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
+import static ca.ftcalberta.vvlivescore.R.id.btnOpMode;
+
 public class VortexActivity extends Activity {
 
     private VortexState vortexState = new VortexState();
+    private Button btnOpMode;
     private TextView txtVortex;
     private TextView txtTotal;
     private TextView txtCount;
+
+    private AlertDialog resetDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vortex);
 
-        final Button btnOpMode = (Button) findViewById(R.id.btnOpMode);
+        resetDialog = new AlertDialog.Builder(this)
+                .setTitle("Score Reset")
+                .setMessage("Warning: You are about to reset the score.")
+                .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton("Reset", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        vortexState.reset();
+                        goToAutonomous();
+                        updateTotal();
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+
+        btnOpMode = (Button) findViewById(R.id.btnOpMode);
         btnOpMode.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 OpMode opMode = vortexState.getOpMode();
 
                 //Swap OpMode
-                if (opMode == OpMode.AUTONOMOUS) {
-                    vortexState.setOpMode(OpMode.TELEOP);
-                    btnOpMode.setText("Teleop");
-                }
-                else {
-                    vortexState.setOpMode(OpMode.AUTONOMOUS);
-                    btnOpMode.setText("Autonomous");
-                }
+                if (opMode == OpMode.AUTONOMOUS)
+                    goToTeleop();
+                else
+                    goToAutonomous();
+
                 updateTotal();
                 return true;
             }
@@ -50,6 +74,13 @@ public class VortexActivity extends Activity {
             public void onClick(View v) {
                 vortexState.decrement();
                 updateTotal();
+            }
+        });
+        btnDecrement.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                resetDialog.show();
+                return true;
             }
         });
 
@@ -67,25 +98,27 @@ public class VortexActivity extends Activity {
         txtVortex = (TextView) findViewById(R.id.txtVortexActivityTitle);
 
         applySetupParams();
-
-        vortexState.launch();
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        vortexState.halt();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        vortexState.launch();
+    public void onBackPressed() {
+        vortexState.reset();
+        super.onBackPressed();
     }
 
     private void updateTotal() {
         txtTotal.setText(String.format(Locale.CANADA, "Score: %d", vortexState.getScore()));
         txtCount.setText(String.format(Locale.CANADA, "Count: %d", vortexState.getCount()));
+    }
+
+    private void goToAutonomous() {
+        vortexState.setOpMode(OpMode.AUTONOMOUS);
+        btnOpMode.setText(R.string.autonomous);
+    }
+
+    private void goToTeleop() {
+        vortexState.setOpMode(OpMode.TELEOP);
+        btnOpMode.setText(R.string.teleop);
     }
 
     private void applySetupParams() {
