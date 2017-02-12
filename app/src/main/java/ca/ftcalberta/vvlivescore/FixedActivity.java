@@ -130,17 +130,17 @@ public class FixedActivity extends Activity {
                     opMode = OpMode.AUTONOMOUS;
                     parkingBlock.setVisibility(LinearLayout.VISIBLE);
                     beaconValue = 30;
-                    btnOpMode.setText("Autonomous");
-                    btnRed1ParkingScore.setText("Not Parked");
-                    btnRed2ParkingScore.setText("Not Parked");
-                    btnBlue1ParkingScore.setText("Not Parked");
-                    btnBlue2ParkingScore.setText("Not Parked");
+                    //btnOpMode.setText("Autonomous");
+                    //btnRed1ParkingScore.setText("Not Parked");
+                    //btnRed2ParkingScore.setText("Not Parked");
+                    //btnBlue1ParkingScore.setText("Not Parked");
+                    //btnBlue2ParkingScore.setText("Not Parked");
                     parkingScores[0][0] = 0;
                     parkingScores[0][1] = 0;
                     parkingScores[1][0] = 0;
                     parkingScores[1][1] = 0;
-                    btnRedCapScore.setText("Not On Floor");
-                    btnBlueCapScore.setText("Not On Floor");
+                    //btnRedCapScore.setText("Not On Floor");
+                    //btnBlueCapScore.setText("Not On Floor");
                 }
                 return true;
             }
