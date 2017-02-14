@@ -104,6 +104,7 @@ public class ScoreUpdater {
 
         try {
             updateJson.put("\"" + strScoreType +"\"", score);
+            updateJson.put("\"timestamp\"", System.currentTimeMillis());
         }
         catch (JSONException e) {
             e.printStackTrace();

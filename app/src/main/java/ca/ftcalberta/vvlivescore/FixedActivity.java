@@ -140,28 +140,18 @@ public class FixedActivity extends Activity {
     }
 
     private void resetScores(){
-        try {
-            updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "Parking", 0);
-            updater.sendScore(Alliance.RED, OpMode.AUTONOMOUS, "Parking", 0);
-            Thread.sleep(500);
-            updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "Beacons", 0);
-            updater.sendScore(Alliance.RED, OpMode.AUTONOMOUS, "Beacons", 0);
-            Thread.sleep(500);
-            updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "CapBall", 0);
-            updater.sendScore(Alliance.RED, OpMode.AUTONOMOUS, "CapBall", 0);
-            Thread.sleep(500);
-            updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "Parking", 0);
-            updater.sendScore(Alliance.RED, OpMode.TELEOP, "Parking", 0);
-            Thread.sleep(500);
-            updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "Beacons", 0);
-            updater.sendScore(Alliance.RED, OpMode.TELEOP, "Beacons", 0);
-            Thread.sleep(500);
-            updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "CapBall", 0);
-            updater.sendScore(Alliance.RED, OpMode.TELEOP, "CapBall", 0);
-        }
-        catch (InterruptedException e) {
-
-        }
+        updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "Parking", 0);
+        updater.sendScore(Alliance.RED, OpMode.AUTONOMOUS, "Parking", 0);
+        updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "Beacons", 0);
+        updater.sendScore(Alliance.RED, OpMode.AUTONOMOUS, "Beacons", 0);
+        updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "CapBall", 0);
+        updater.sendScore(Alliance.RED, OpMode.AUTONOMOUS, "CapBall", 0);
+        updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "Parking", 0);
+        updater.sendScore(Alliance.RED, OpMode.TELEOP, "Parking", 0);
+        updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "Beacons", 0);
+        updater.sendScore(Alliance.RED, OpMode.TELEOP, "Beacons", 0);
+        updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "CapBall", 0);
+        updater.sendScore(Alliance.RED, OpMode.TELEOP, "CapBall", 0);
 
         alliances[0] = Alliance.NONE;
         alliances[1] = Alliance.NONE;
