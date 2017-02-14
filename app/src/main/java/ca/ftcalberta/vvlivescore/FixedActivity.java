@@ -113,6 +113,7 @@ public class FixedActivity extends Activity {
                 }
                 else {
                     opMode = OpMode.AUTONOMOUS;
+                    resetScores();
                     parkingBlock.setVisibility(LinearLayout.VISIBLE);
                     beaconValue = 30;
                     btnOpMode.setText(R.string.autonomous);
@@ -131,8 +132,6 @@ public class FixedActivity extends Activity {
                     btnBeacon2.setBackgroundResource(R.drawable.score_button);
                     btnBeacon3.setBackgroundResource(R.drawable.score_button);
                     btnBeacon4.setBackgroundResource(R.drawable.score_button);
-
-                    resetScores();
                 }
                 return true;
             }
@@ -141,23 +140,35 @@ public class FixedActivity extends Activity {
     }
 
     private void resetScores(){
-        updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "Parking", 0);
-        updater.sendScore(Alliance.RED, OpMode.AUTONOMOUS, "Parking", 0);
-        updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "Beacons", 0);
-        updater.sendScore(Alliance.RED, OpMode.AUTONOMOUS, "Beacons", 0);
-        updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "CapBall", 0);
-        updater.sendScore(Alliance.RED, OpMode.AUTONOMOUS, "CapBall", 0);
-        updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "Parking", 0);
-        updater.sendScore(Alliance.RED, OpMode.TELEOP, "Parking", 0);
-        updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "Beacons", 0);
-        updater.sendScore(Alliance.RED, OpMode.TELEOP, "Beacons", 0);
-        updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "CapBall", 0);
-        updater.sendScore(Alliance.RED, OpMode.TELEOP, "CapBall", 0);
+        try {
+            updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "Parking", 0);
+            updater.sendScore(Alliance.RED, OpMode.AUTONOMOUS, "Parking", 0);
+            Thread.sleep(500);
+            updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "Beacons", 0);
+            updater.sendScore(Alliance.RED, OpMode.AUTONOMOUS, "Beacons", 0);
+            Thread.sleep(500);
+            updater.sendScore(Alliance.BLUE, OpMode.AUTONOMOUS, "CapBall", 0);
+            updater.sendScore(Alliance.RED, OpMode.AUTONOMOUS, "CapBall", 0);
+            Thread.sleep(500);
+            updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "Parking", 0);
+            updater.sendScore(Alliance.RED, OpMode.TELEOP, "Parking", 0);
+            Thread.sleep(500);
+            updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "Beacons", 0);
+            updater.sendScore(Alliance.RED, OpMode.TELEOP, "Beacons", 0);
+            Thread.sleep(500);
+            updater.sendScore(Alliance.BLUE, OpMode.TELEOP, "CapBall", 0);
+            updater.sendScore(Alliance.RED, OpMode.TELEOP, "CapBall", 0);
+        }
+        catch (InterruptedException e) {
+
+        }
 
         alliances[0] = Alliance.NONE;
         alliances[1] = Alliance.NONE;
         alliances[2] = Alliance.NONE;
         alliances[3] = Alliance.NONE;
+        redBeaconCount = 0;
+        blueBeaconCount = 0;
     }
 
     @Override
