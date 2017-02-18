@@ -31,7 +31,7 @@ Fixed Scoring includes the Beacons, Cap Ball and Robot Parking.
   <img src="https://raw.githubusercontent.com/jhryniw/VVLiveScore/master/docs/images/fixed_activity.png"/>
 </p>
 
-In Autonomous, the top four buttons score the robot parking scores for the match. They will toggle between the states of *Not Parked*, *Partially Parked* and *Fully Parked*. Assign one of these buttons per robot. The next two buttons track the cap ball score, essentially if it has stayed (*Off the floor*) or has been knocked off (*On the floor*) the center. Finally, the bottom four buttons represent the four beacons. They start off as unclaimed (grey) but once toggled their ownership will switch between the alliances. Long-clicking on the beacon buttons will unclaim them in case you make a mistake.
+In Autonomous, the top four buttons score the robot parking scores for the match. They will toggle between the states of *Not Parked*, *Partially Parked* and *Fully Parked*. Assign one of these buttons per robot. The next two buttons track the cap ball score, essentially if it has stayed (*Not on Floor*) or has been knocked off (*Touching Floor*) the center. Finally, the bottom four buttons represent the four beacons. They start off as unclaimed (grey) but once toggled their ownership will switch between the alliances. Long-clicking on the beacon buttons will unclaim them in case you make a mistake.
 
 Once the Autonomous Period scoring is complete, long-click on the OpMode button in the middle to toggle to the TeleOp period. **Once this is done you may not go back to Autonomous without resetting the score.**
 
