@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
                     btn.setTextColor(Color.BLACK);
                     btn.setBackgroundResource(R.drawable.score_button);
 
-                    vortexBlock.setVisibility(LinearLayout.VISIBLE);
+                    //vortexBlock.setVisibility(LinearLayout.VISIBLE);
                     allianceBlock.setVisibility(LinearLayout.VISIBLE);
 
                     if(allianceState == Alliance.BLUE)
