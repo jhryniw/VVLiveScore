@@ -14,15 +14,14 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
-import static ca.ftcalberta.vvlivescore.R.id.btnOpMode;
-
 public class VortexActivity extends Activity {
 
-    private VortexState vortexState = new VortexState();
+    private VortexState centerVortex = new VortexState();
+    private VortexState cornerVortex = new VortexState();
     private Button btnOpMode;
     private TextView txtVortex;
-    private TextView txtTotal;
-    private TextView txtCount;
+    private TextView txtCornerCount;
+    private TextView txtCentreCount;
 
     private AlertDialog resetDialog;
 
@@ -43,7 +42,8 @@ public class VortexActivity extends Activity {
                 .setPositiveButton("Reset", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        vortexState.reset();
+                        centerVortex.reset();
+                        cornerVortex.reset();
                         goToAutonomous();
                         updateTotal();
                         dialog.dismiss();
@@ -55,7 +55,7 @@ public class VortexActivity extends Activity {
         btnOpMode.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                OpMode opMode = vortexState.getOpMode();
+                OpMode opMode = centerVortex.getOpMode();
 
                 //Swap OpMode
                 if (opMode == OpMode.AUTONOMOUS)
@@ -68,56 +68,75 @@ public class VortexActivity extends Activity {
             }
         });
 
-        Button btnDecrement = (Button) findViewById(R.id.btnCorrect);
-        btnDecrement.setOnClickListener(new View.OnClickListener() {
+        Button btnCentreDecrement = (Button) findViewById(R.id.btnDecCentre);
+        Button btnCornerDecrement = (Button) findViewById(R.id.btnDecCorner);
+
+        btnCentreDecrement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vortexState.decrement();
+                centerVortex.decrement();
                 updateTotal();
             }
         });
-        btnDecrement.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                resetDialog.show();
-                return true;
-            }
-        });
-
-        Button btnScore = (Button) findViewById(R.id.btnScore);
-        btnScore.setOnClickListener(new View.OnClickListener() {
+        btnCornerDecrement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vortexState.increment();
+                cornerVortex.decrement();
                 updateTotal();
             }
         });
 
-        txtTotal = (TextView) findViewById(R.id.txtTotal);
-        txtCount = (TextView) findViewById(R.id.txtCount);
+        btnCentreDecrement.setOnLongClickListener(resetListener);
+        btnCornerDecrement.setOnLongClickListener(resetListener);
+
+        Button btnCentreScore = (Button) findViewById(R.id.btnCentreScore);
+        Button btnCornerScore = (Button) findViewById(R.id.btnCornerScore);
+        btnCentreScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                centerVortex.increment();
+                updateTotal();
+            }
+        });
+        btnCornerScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cornerVortex.increment();
+                updateTotal();
+            }
+        });
+
+        txtCornerCount = (TextView) findViewById(R.id.txtCorner);
+        txtCentreCount = (TextView) findViewById(R.id.txtCentre);
         txtVortex = (TextView) findViewById(R.id.txtVortexActivityTitle);
 
         applySetupParams();
+
+        centerVortex.setVortexType(VortexType.CENTRE_VORTEX);
+        cornerVortex.setVortexType(VortexType.CORNER_VORTEX);
     }
 
     @Override
     public void onBackPressed() {
-        vortexState.reset();
+        centerVortex.reset();
+        cornerVortex.reset();
         super.onBackPressed();
     }
 
     private void updateTotal() {
-        txtTotal.setText(String.format(Locale.CANADA, "Score: %d", vortexState.getScore()));
-        txtCount.setText(String.format(Locale.CANADA, "Count: %d", vortexState.getCount()));
+        txtCornerCount.setText(String.format(Locale.CANADA, ": %d", cornerVortex.getCount()));
+        txtCentreCount.setText(String.format(Locale.CANADA, ": %d", centerVortex.getCount()));
     }
 
     private void goToAutonomous() {
-        vortexState.setOpMode(OpMode.AUTONOMOUS);
+        centerVortex.setOpMode(OpMode.AUTONOMOUS);
+        cornerVortex.setOpMode(OpMode.AUTONOMOUS);
         btnOpMode.setText(R.string.autonomous);
     }
 
     private void goToTeleop() {
-        vortexState.setOpMode(OpMode.TELEOP);
+        centerVortex.setOpMode(OpMode.TELEOP);
+        cornerVortex.setOpMode(OpMode.TELEOP);
         btnOpMode.setText(R.string.teleop);
     }
 
@@ -125,40 +144,44 @@ public class VortexActivity extends Activity {
         SharedPreferences setupPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         Alliance a;
-        VortexType v;
         String alliancePrefix, title;
 
-        if (!setupPrefs.contains("vortex") || !setupPrefs.contains("alliance")) {
+        if (!setupPrefs.contains("alliance")) {
             Toast.makeText(getApplicationContext(), "Invalid setup parameters", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
         RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.activity_vortex);
-        Button btnScore = (Button) findViewById(R.id.btnScore);
+        Button btnCentreScore = (Button) findViewById(R.id.btnCentreScore);
+        Button btnCornerScore = (Button) findViewById(R.id.btnCornerScore);
 
         a = Alliance.values()[setupPrefs.getInt("alliance", 0)];
-        v = setupPrefs.getString("vortex", "Corner").equals("Corner") ? VortexType.CORNER_VORTEX : VortexType.CENTRE_VORTEX;
 
         if(a == Alliance.BLUE) {
             alliancePrefix = "Blue ";
             mainLayout.setBackgroundResource(R.color.FtcLightBlue);
-            btnScore.setBackgroundResource(R.drawable.alliance_button_blue);
-
+            btnCentreScore.setBackgroundResource(R.drawable.alliance_button_blue);
+            btnCornerScore.setBackgroundResource(R.drawable.alliance_button_blue);
         }
         else {
             alliancePrefix = "Red ";
             mainLayout.setBackgroundResource(R.color.FtcLightRed);
-            btnScore.setBackgroundResource(R.drawable.alliance_button_red);
+            btnCentreScore.setBackgroundResource(R.drawable.alliance_button_red);
+            btnCornerScore.setBackgroundResource(R.drawable.alliance_button_red);
         }
 
-        if (v == VortexType.CORNER_VORTEX)
-            title = alliancePrefix + "Corner Vortex";
-        else
-            title = alliancePrefix + "Center Vortex";
+        title = alliancePrefix + "Vortex Scoring";
 
         txtVortex.setText(title);
-        vortexState.setAlliance(a);
-        vortexState.setVortexType(v);
+        centerVortex.setAlliance(a);
     }
+
+    private View.OnLongClickListener resetListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            resetDialog.show();
+            return true;
+        }
+    };
 }

@@ -14,38 +14,139 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:weightSum="1"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
         <TextView
-            android:text="Centre Vortex"
+            android:text="Vortex Scoring"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtVortexActivityTitle"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <Button
-            android:text="Decrement"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnCorrect"
-            android:background="@drawable/decrement_button"
-            android:textColor="@android:color/white"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp" />
+            android:layout_height="wrap_content">
 
-        <Button
-            android:text="Score"
+            <Button
+                android:text="Corner -"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnDecCorner"
+                android:background="@drawable/decrement_button"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"/>
+
+            <Button
+                android:text="Centre -"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnDecCentre"
+                android:background="@drawable/decrement_button"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_weight="0.55"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <Button
+                android:text="Corner +"
+                android:id="@+id/btnCornerScore"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/score_button"
+                android:textSize="24sp"
+                android:textStyle="normal|bold"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                 />
+
+            <Button
+                android:text="Centre +"
+                android:id="@+id/btnCentreScore"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/score_button"
+                android:textSize="24sp"
+                android:textStyle="normal|bold"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="0.55" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnScore"
-            android:background="@drawable/score_button"
-            android:layout_weight="2"
-            android:textSize="24sp"
-            android:textStyle="normal|bold"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp" />
+            android:weightSum="1">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/corner_vortex_black" />
+
+            <TextView
+                android:text=": 0"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/txtCorner"
+                android:typeface="normal"
+                android:textSize="24sp"
+                tools:textStyle="bold"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_marginTop="2dp"
+                android:gravity="left" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/centre_vortex_black" />
+
+            <TextView
+                android:text=": 0"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/txtCentre"
+                android:typeface="normal"
+                android:textSize="24sp"
+                tools:textStyle="bold"
+                android:layout_marginTop="2dp"
+                android:gravity="start"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp" />
+
+        </LinearLayout>
 
         <Button
             android:text="Autonomous"
@@ -53,39 +154,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/btnOpMode"
             android:background="@drawable/score_button"
+            android:textStyle="normal|bold"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="10dp" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true">
-
-            <TextView
-                android:text="Count: 0"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/txtCount"
-                android:typeface="normal"
-                android:elevation="0dp"
-                android:textSize="30sp"
-                tools:textStyle="bold"
-                android:layout_marginTop="10dp" />
-
-            <TextView
-                android:text="Score: 0"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/txtTotal"
-                android:typeface="normal"
-                android:elevation="0dp"
-                android:textSize="15sp"
-                tools:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:gravity="bottom|right" />
-
-        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

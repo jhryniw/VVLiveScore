@@ -5,4 +5,11 @@
     <string name="on_floor">On Floor</string>
     <string name="not_parked">Not Parked</string>
     <string name="not_on_floor">Not On Floor</string>
+    <string name="full">Full</string>
+    <string name="partial">Partial</string>
+    <string name="touching_floor">Touching Floor</string>
+    <string name="above_30">Above 30\"</string>
+    <string name="off_floor">Off Floor</string>
+    <string name="capped">Capped</string>
+    <string name="btn_capball">Cap Ball: %d</string>
 </resources>

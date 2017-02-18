@@ -175,13 +175,13 @@ public class FixedActivity extends Activity {
         if(opMode == OpMode.TELEOP){
             if(capScores[allianceNum] == 0){
                 capScores[allianceNum] = 10;
-                button.setText("Off Floor");
+                button.setText(R.string.off_floor);
             } else if(capScores[allianceNum] == 10){
                 capScores[allianceNum] = 20;
-                button.setText("Above 30\"");
+                button.setText(R.string.above_30);
             } else if(capScores[allianceNum] == 20){
                 capScores[allianceNum] = 40;
-                button.setText("Capped");
+                button.setText(R.string.capped);
             } else {
                 capScores[allianceNum] = 0;
                 button.setText(R.string.on_floor);
@@ -189,7 +189,7 @@ public class FixedActivity extends Activity {
         } else { //Autonomous
             if(capScores[allianceNum] == 0){
                 capScores[allianceNum] = 5;
-                button.setText("Touching Floor");
+                button.setText(R.string.touching_floor);
             } else {
                 capScores[allianceNum] = 0;
                 button.setText(R.string.not_on_floor);
@@ -197,7 +197,7 @@ public class FixedActivity extends Activity {
         }
 
         updater.sendScore(robotAlliance, opMode, "CapBall", capScores[allianceNum]);
-        button.setText("Cap Ball: " + Integer.toString(capScores[allianceNum]));
+        button.setText(String.format(getString(R.string.btn_capball), capScores[allianceNum]));
     }
 
     private void parkingButton(Alliance robotAlliance, int buttonNum, Button button){
@@ -210,13 +210,13 @@ public class FixedActivity extends Activity {
         }
         if(parkingScores[allianceNum][buttonNum - 1] == 0){
             parkingScores[allianceNum][buttonNum - 1] = 5;
-            button.setText("Partial");
+            button.setText(R.string.partial);
         } else if(parkingScores[allianceNum][buttonNum - 1] == 5) {
             parkingScores[allianceNum][buttonNum - 1] = 10;
-            button.setText("Full");
+            button.setText(R.string.full);
         } else {
             parkingScores[allianceNum][buttonNum - 1] = 0;
-            button.setText("Not Parked");
+            button.setText(R.string.not_parked);
         }
         updater.sendScore(robotAlliance, opMode, "Parking", parkingScores[allianceNum][0] + parkingScores[allianceNum][1]);
         button.setText("Parking " + Integer.toString(buttonNum) + ": " + Integer.toString(parkingScores[allianceNum][buttonNum - 1]));

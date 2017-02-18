@@ -33,20 +33,19 @@ public class ScoreUpdater {
     private JSONObject state;
     private ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(4);
 
-
     private boolean isPosting = false;
     private Handler mHandle = new Handler();
 
     private Runnable post = new Runnable() {
         @Override
         public void run() {
-        try {
-            getHttpConn(state.toString());
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            isPosting = false;
-        }
+            try {
+                getHttpConn(state.toString());
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                isPosting = false;
+            }
         }
     };
 
@@ -97,6 +96,7 @@ public class ScoreUpdater {
         }
     }
 
+    //TODO: Pool requests into batches
     void sendScore( Alliance alliance, OpMode opMode, String type, int score) {
 
         String strScoreType = ScoreUpdater.getScoreType(opMode, alliance, type);
