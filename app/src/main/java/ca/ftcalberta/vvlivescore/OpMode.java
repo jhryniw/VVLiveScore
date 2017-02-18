@@ -6,5 +6,17 @@ package ca.ftcalberta.vvlivescore;
 
 enum OpMode {
     AUTONOMOUS,
-    TELEOP
+    TELEOP;
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case AUTONOMOUS:
+                return "Autonomous";
+            case TELEOP:
+                return "Teleop";
+            default:
+                return super.toString();
+        }
+    }
 }

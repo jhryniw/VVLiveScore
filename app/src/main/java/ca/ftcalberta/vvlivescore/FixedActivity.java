@@ -197,7 +197,7 @@ public class FixedActivity extends Activity {
         }
 
         updater.sendScore(robotAlliance, opMode, "CapBall", capScores[allianceNum]);
-        button.setText(String.format(getString(R.string.btn_capball), capScores[allianceNum]));
+        //button.setText(String.format(getString(R.string.btn_capball), capScores[allianceNum]));
     }
 
     private void parkingButton(Alliance robotAlliance, int buttonNum, Button button){
@@ -219,8 +219,7 @@ public class FixedActivity extends Activity {
             button.setText(R.string.not_parked);
         }
         updater.sendScore(robotAlliance, opMode, "Parking", parkingScores[allianceNum][0] + parkingScores[allianceNum][1]);
-        button.setText("Parking " + Integer.toString(buttonNum) + ": " + Integer.toString(parkingScores[allianceNum][buttonNum - 1]));
-
+        //button.setText("Parking " + Integer.toString(buttonNum) + ": " + Integer.toString(parkingScores[allianceNum][buttonNum - 1]));
     }
 
     private View.OnLongClickListener beaconLongClick(final int beaconNum, final Button button) {
