@@ -175,6 +175,7 @@ public class VortexActivity extends Activity {
 
         txtVortex.setText(title);
         centerVortex.setAlliance(a);
+        cornerVortex.setAlliance(a);
     }
 
     private View.OnLongClickListener resetListener = new View.OnLongClickListener() {
