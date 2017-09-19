@@ -56,7 +56,7 @@ public class ScoreUpdater {
             return;
 
         isPosting = true;
-        mHandle.postDelayed(post, 1000);
+        mHandle.postDelayed(post, 1000); 
     }
 
     void halt() {
